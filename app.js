@@ -5,6 +5,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const ejsMate = require('ejs-mate');
 
 var indexRouter = require('./routes/iot');
 var usersRouter = require('./routes/test');
@@ -14,6 +15,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+//to used ejs layout for boilerplate.ejs, use to import variable from controller to ejs
+app.engine('ejs', ejsMate)
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -47,12 +50,3 @@ app.listen(port, () => {
 
 module.exports = app;
 
-/*
-
-1) configuring tailwindcss
-2) sending data to mongodb
-3) websocket and mqtt
-4) websocket and mqtt to mongodb
-5) websocket and mqtt to move the servo
-6) page 1 start writing
- */
