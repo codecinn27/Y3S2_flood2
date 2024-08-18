@@ -1,11 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MQTT Server</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MQTT WebSocket App</title>
+  <script src="/socket.io/socket.io.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <h1>Mqtt Server</h1>
+
+<body class="bg-gray-100 font-sans">
+  <div class="container mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center text-blue-600 mb-8">MQTT WebSocket App</h1>
+
+    <!-- Subscription Form -->
+    <div class="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto mb-8">
+        <input type="text" id="subscribeTopic" placeholder="Enter topic to subscribe" class="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        <button onclick="subscribeToTopic()" class="bg-green-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-green-600 transition duration-300">Subscribe</button>
+    </div>
+      
+    <!-- Publish Message Form -->
+    <div class="bg-white shadow-md rounded-lg p-6 max-w-lg mx-auto">
+      <input type="text" id="topic" placeholder="Enter topic" class="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <input type="text" id="message" placeholder="Enter message" class="border border-gray-300 rounded-lg p-3 w-full mb-4 focus:outline-none focus:ring-2 focus:ring-blue-400">
+      <button onclick="publishMessage()" class="bg-blue-500 text-white font-semibold py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-300">Publish</button>
+    </div>
+
+    <!-- Messages Display -->
+    <div id="messages" class="mt-8 bg-gray-50 p-6 rounded-lg shadow-md max-w-lg mx-auto text-left space-y-3"></div>
+  </div>
+
+  <script>
+    const socket = io();
+
+    socket.on('mqtt-message', (data) => {
+      const messagesDiv = document.getElementById('messages');
+      const newMessage = document.createElement('p');
+      newMessage.classList.add('p-2', 'bg-white', 'rounded-lg', 'shadow', 'border-l-4', 'border-blue-500');
+      newMessage.textContent = `Topic: ${data.topic}, Message: ${data.message}`;
+      messagesDiv.appendChild(newMessage);
+    });
+
+    function publishMessage() {
+      const topic = document.getElementById('topic').value;
+      const messageText = document.getElementById('message').value;
+      fetch('/test/publish', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ topic, message: messageText })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log('Message published:', data.message);
+        }
+      });
+    }
+
+    function subscribeToTopic() {
+      const topic = document.getElementById('subscribeTopic').value;
+      fetch('/test/subscribe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ topic })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          console.log('Subscribed:', data.message);
+        }
+      });
+    }
+  </script>
 </body>
+
 </html>

@@ -7,6 +7,8 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const ejsMate = require('ejs-mate');
 
+
+
 var indexRouter = require('./routes/iot');
 var usersRouter = require('./routes/test');
 
@@ -43,10 +45,18 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+//WebSocket setup, The Socket.IO setup should be done after initializing the Express app.
+const http = require('http');
+const server = http.createServer(app);
+// Import the Socket.IO setup
+require('./controllers/socketTest')(server); // Pass the server to the socket setup
+
 const port =  3000
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
 
 module.exports = app;
 
