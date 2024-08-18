@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "undefined/subscriptions/e1963ae7-ac2e-494f-b7dc-20f6a1558464/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/floodzte5g",
+    "appService.deploySubpath": "."
+}
