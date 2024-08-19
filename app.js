@@ -48,11 +48,13 @@ app.use(function(err, req, res, next) {
 //WebSocket setup, The Socket.IO setup should be done after initializing the Express app.
 const http = require('http');
 const server = http.createServer(app);
+const io = require('socket.io')(server); // Initialize socket.io with the server
 // Import the Socket.IO setup
-require('./controllers/socketTest')(server); // Pass the server to the socket setup
+require('./controllers/socketTest')(io); // Pass the server to the socket setup
 
 const port =  3000
-app.listen(port, () => {
+//using server.listern instead of app.listen
+server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
 

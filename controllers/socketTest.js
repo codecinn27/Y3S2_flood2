@@ -2,14 +2,14 @@
 const socketIo = require('socket.io');
 const mqttController = require('./mqttTest'); // Import your MQTT controller if needed
 
-module.exports = (server) => {
-  const io = socketIo(server);
+module.exports = (io) => {
 
   io.on('connection', (socket) => {
     console.log('New client connected');
 
     // Listen for the 'publish' event
     socket.on('publish', (data) => {
+      console.log('Publishing message:', data);
       mqttController.publishMessage(data.topic, data.message);
     });
 
