@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>MQTT WebSocket App</title>
-  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 
@@ -44,36 +44,12 @@
     function publishMessage() {
       const topic = document.getElementById('topic').value;
       const messageText = document.getElementById('message').value;
-      fetch('/test/publish', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ topic, message: messageText })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          console.log('Message published:', data.message);
-        }
-      });
+      socket.emit('publish', {topic, message: messageText});
     }
 
     function subscribeToTopic() {
       const topic = document.getElementById('subscribeTopic').value;
-      fetch('/test/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ topic })
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.success) {
-          console.log('Subscribed:', data.message);
-        }
-      });
+      socket.emit('subscribe', topic);
     }
   </script>
 </body>
