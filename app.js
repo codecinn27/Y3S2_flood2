@@ -1,3 +1,5 @@
+// npm run dev
+// npm run start
 require('dotenv').config();
 
 var createError = require('http-errors');
