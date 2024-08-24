@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MQTT WebSocket App</title>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"
+    ></script>
+    <script
+      type="text/javascript"
+      src="https://cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"
+    ></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+      .container {
+        max-width: 600px;
+        margin: 50px auto;
+        text-align: center;
+      }
+      input {
+        margin: 5px;
+        padding: 10px;
+        width: 80%;
+      }
+      button {
+        padding: 10px 20px;
+      }
+      #messages {
+        margin-top: 20px;
+        text-align: left;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>MQTT WebSocket App</h1>
+      <input type="text" id="topic" value="test" />
+      <input
+        type="number"
+        id="message"
+        placeholder="Enter message (numbers only)"
+      />
+      <button onclick="publishMessage()">Publish</button>
+      <div id="messages"></div>
+
+      <div id="chart-container"></div>
+      <!-- Placeholder for the gauge chart -->
+      <div id="current-value" style="font-size: 24px; margin-top: 10px"></div>
+
+      <br />
+      <div class="chart-container">
+        <canvas id="waterLevelChart"></canvas>
+      </div>
+    </div>
+
+    <script>
+      let gaugeChart;
+      let waterLevelChart; // Move waterLevelChart to global scope
+    
+      function createFusionGaugeChart(containerId, caption, subCaption, lowerLimit, upperLimit, value) {
+        FusionCharts.ready(function () {
+          gaugeChart = new FusionCharts({
+            type: "angulargauge",
+            renderAt: containerId,
+            width: "450",
+            height: "300",
+            dataFormat: "json",
+            dataSource: {
+              chart: {
+                caption: caption,
+                subcaption: subCaption,
+                lowerLimit: lowerLimit,
+                upperLimit: upperLimit,
+                theme: "fusion",
+              },
+              colorRange: {
+                color: [
+                  {
+                    minValue: "0",
+                    maxValue: "50",
+                    code: "#6baa01",
+                  },
+                  {
+                    minValue: "50",
+                    maxValue: "75",
+                    code: "#f8bd19",
+                  },
+                  {
+                    minValue: "75",
+                    maxValue: "100",
+                    code: "#e44a00",
+                  },
+                ],
+              },
+              dials: {
+                dial: [
+                  {
+                    value: value,
+                  },
+                ],
+              },
+            },
+          });
+          gaugeChart.render();
+        });
+      }
+    
+      function updateWaterLevelChart(newValue) {
+        if (waterLevelChart) { // Check if waterLevelChart is defined
+          const newLabel = new Date().toLocaleTimeString(); // Get current time as label
+          waterLevelChart.data.labels.push(newLabel);
+          waterLevelChart.data.datasets[0].data.push(newValue);
+    
+          // Update the chart
+          waterLevelChart.update();
+        }
+      }
+    
+      document.addEventListener("DOMContentLoaded", function () {
+        // Initialize the chart with empty data
+        const ctxWaterLevel = document
+          .getElementById("waterLevelChart")
+          .getContext("2d");
+    
+        waterLevelChart = new Chart(ctxWaterLevel, {
+          type: "line",
+          data: {
+            labels: [], // Empty labels initially
+            datasets: [
+              {
+                label: "Water Level",
+                data: [], // Empty data initially
+                borderColor: "rgba(75, 192, 192, 1)",
+                backgroundColor: "rgba(75, 192, 192, 0.2)",
+                fill: false,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              x: {
+                title: {
+                  display: true,
+                  text: "DateTime",
+                },
+              },
+              y: {
+                title: {
+                  display: true,
+                  text: "Water Level",
+                },
+              },
+            },
+          },
+        });
+      });
+    
+      const socket = io();
+    
+      socket.on("mqtt-message", (data) => {
+        const messagesDiv = document.getElementById("messages");
+        const newMessage = document.createElement("p");
+        newMessage.textContent = `Topic: ${data.topic}, Message: ${data.message}`;
+        messagesDiv.appendChild(newMessage);
+    
+        const newValue = parseFloat(data.message); // Ensure data is a number
+        if (!isNaN(newValue)) {
+          // Update the gauge chart with the new value received
+          if (gaugeChart) {
+            gaugeChart.feedData(`value=${newValue}`);
+            updateCurrentValue(newValue);
+          }
+    
+          // Update the water level chart with the new value
+          updateWaterLevelChart(newValue);
+        }
+      });
+    
+      function publishMessage() {
+        const topic = document.getElementById("topic").value;
+        const messageText = document.getElementById("message").value;
+    
+        if (!isNaN(messageText) && messageText !== "") {
+          socket.emit("publish", { topic, message: messageText });
+        } else {
+          alert("Please enter a valid number.");
+        }
+      }
+    
+      // Update the current value indicator
+      function updateCurrentValue(value) {
+        const currentValueDiv = document.getElementById("current-value");
+        currentValueDiv.textContent = `Current Value: ${value}`;
+      }
+    
+      // Initial gauge chart creation with a default value
+      createFusionGaugeChart("chart-container", "Water Level Meter", "Real Time", 0, 100, 0);
+    </script>
+  </body>
+</html>
