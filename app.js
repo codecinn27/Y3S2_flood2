@@ -8,6 +8,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const ejsMate = require('ejs-mate');
+const {connectDB} = require("./database/connection");
 
 // Import the socket setup from controllers/socket.js
 const { app, server, io } = require('./controllers/socket'); // Import from socket.js
@@ -21,6 +22,7 @@ app.set('view engine', 'ejs');
 //to used ejs layout for boilerplate.ejs, use to import variable from controller to ejs
 app.engine('ejs', ejsMate);
 
+connectDB();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
