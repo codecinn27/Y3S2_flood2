@@ -44,17 +44,19 @@ mqttClient.on('message', async (topic, message) => {
     if (model) {
         // Parse the incoming message (assuming it's JSON format)
         const data = JSON.parse(message.toString());
-        const newData = new model({
-            tempC: data.tempC,
-            humidity: data.humidity,
-            rain: data.rain,
-            rainOutput: data.rain_output,
-            distance: data.distance_cm, // This is required
-            status: data.status,
-            time: data.time,
-            date: data.date,
-        });
+        // Generate current timestamp in Malaysia Time
+        const malaysiaOffset = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
+        const malaysiaTime = new Date(Date.now() + malaysiaOffset);
 
+        const newData = new model({
+          tempC: data.tempC,
+          humidity: data.humidity,
+          rain: data.rain,
+          rainOutput: data.rain_output,
+          distance: data.distance_cm, // This is required
+          status: data.status,
+          time: malaysiaTime, // Adjusted to Malaysia Time
+        });
         await newData.save(); // Save the data to MongoDB
         console.log(`Data saved to ${model.modelName}`);
     }
