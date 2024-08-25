@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var test = require('../controllers/testing');
 
 // const mqttController = require('../controllers/mqttTest');
 
@@ -24,8 +25,6 @@ router.get('/graph2', function(req, res, next) {
   res.render('test/graph2');
 });
 
-router.get('/history', function(req, res, next) {
-  res.render('test/history');
-});
+router.get('/history', test.displayDataPerMinute);
 
 module.exports = router;
