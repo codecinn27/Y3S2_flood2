@@ -4,8 +4,8 @@ const mongoose = require('mongoose');
 const dataSchema = new mongoose.Schema({
     tempC: Number,        // Store temperature in Celsius as a number
     humidity: Number,       // Store humidity as a number
-    rain: Number,           // Rain status (e.g., "No Rain", "Light Rain", etc.)
-    rainOutput: String,      // Store rain sensor value as a number
+    rain: Number,          
+    rainOutput: String,      
     distance: { 
         type: Number, 
         required: true 

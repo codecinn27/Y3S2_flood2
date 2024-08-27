@@ -1,0 +1,46 @@
+<header id="header"
+class="fixed top-0 left-0 w-full bg-gray-100 text-gray-900 shadow-lg z-50 transition-colors duration-300">
+<div class="container mx-auto px-4 py-2 flex justify-between items-center">
+
+    <!-- Left Side: Icons and Title -->
+    <div class="flex items-center space-x-4">
+        <!-- About Us Icon -->
+        <a href="#" class="icon w-10 h-10 flex justify-center items-center rounded-full duration-300">
+            <i class="fa-regular fa-user"></i>
+        </a>
+        <!-- Project Logo Icon (Non-Clickable) -->
+        <div class="logo w-10 h-10 flex justify-center items-center rounded-full duration-300">
+            Project Icon
+        </div>
+        <div style="font-weight:bold">Our Project Name here</div>
+    </div>
+
+    <!-- Right Side: Dropdown and Switch -->
+    <div class="flex items-center space-x-4">
+        <!-- Dropdown Menu -->
+        <div class="relative">
+            <button id="dropdownButton"
+                class="dropdown-button text-gray-900 px-4 py-2 rounded-md focus:outline-none transition-colors duration-300">
+                Menu
+            </button>
+            <div id="dropdownMenu" class="dropdown-menu absolute right-0 mt-2 w-48 shadow-lg rounded-md hidden">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-200 transition-colors duration-300">Option
+                    1</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-200 transition-colors duration-300">Option
+                    2</a>
+            </div>
+        </div>
+
+        <!-- Light/Dark Theme Switch -->
+        <label class="flex items-center cursor-pointer">
+            <input type="checkbox" id="themeToggle" class="hidden">
+            <div
+                class="switch-background w-10 h-6 rounded-full flex items-center p-1 transition-colors duration-300">
+                <div id="toggleDot"
+                    class="switch-dot w-4 h-4 rounded-full shadow-md transform transition-transform duration-300">
+                </div>
+            </div>
+        </label>
+    </div>
+</div>
+</header>
