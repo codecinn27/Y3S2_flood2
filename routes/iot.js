@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var mongooseController = require('../controllers/mongooseController');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -21,5 +22,7 @@ router.get('/graph', function(req, res, next) {
 router.get('/about', function(req, res, next) {
   res.render('iot/about');
 });
+
+router.get('/durian-tunggal/latest', mongooseController.getLast10DurianTunggalData);
 
 module.exports = router;

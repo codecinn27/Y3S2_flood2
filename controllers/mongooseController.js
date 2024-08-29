@@ -2,7 +2,7 @@
 const { AyerKeroh, DurianTunggal } = require('../models/ver1'); // Import your models
 
 // Controller function to save data to MongoDB
-exports.saveMqttData = async (topic, message) => {
+const saveMqttData = async (topic, message) => {
   try {
     let model;
 
@@ -38,4 +38,21 @@ exports.saveMqttData = async (topic, message) => {
   } catch (err) {
     console.error('Error saving data to MongoDB:', err);
   }
+};
+
+const getLast10DurianTunggalData = async(req, res) => {
+  try {
+    const data = await DurianTunggal.find().sort({ time: -1 }).limit(10);
+    res.json(data);
+  } catch (err) {
+      console.error('Error fetching data from MongoDB:', err);
+      res.status(500).json({ error: 'An error occurred while fetching data' });
+  }
+}
+
+
+// Export all functions at once
+module.exports = {
+  saveMqttData,
+  getLast10DurianTunggalData,
 };
