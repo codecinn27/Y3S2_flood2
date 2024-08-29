@@ -23,6 +23,6 @@ router.get('/about', function(req, res, next) {
   res.render('iot/about');
 });
 
-router.get('/durian-tunggal/latest', mongooseController.getLast10DurianTunggalData);
+router.get('/durianTunggal/latest', mongooseController.getLast10DurianTunggalData);
 
 module.exports = router;
