@@ -55,6 +55,7 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 
+
     function updateBarChart(humidity, tempC, rain, distance_cm) {
         barChart.data.datasets[0].data = [humidity];
         barChart.data.datasets[1].data = [tempC];
