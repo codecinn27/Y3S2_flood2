@@ -11,7 +11,9 @@ const dataSchema = new mongoose.Schema({
         required: true 
     },   
     status: String,         // Status of the system (e.g., "Normal", "Warning", "Danger")
-    time: Date, // Time field from the incoming message
+    date: String,
+    time: String, 
+    mongoDBtime: Date
 }, { timestamps: true }); 
 
 // Create models for AyerKeroh and DurianTunggal using the same schema

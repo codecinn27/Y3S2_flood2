@@ -28,7 +28,9 @@ const saveMqttData = async (topic, message) => {
         rainOutput: data.rain_output,
         distance: data.distance_cm, // This is required
         status: data.status,
-        time: malaysiaTime, // Adjusted to Malaysia Time
+        date: data.date,
+        time: data.time,
+        mongoDBtime: malaysiaTime, // Adjusted to Malaysia Time
       });
 
       // Save the data to MongoDB

@@ -5,7 +5,7 @@ var test = require('../controllers/testing');
 // const mqttController = require('../controllers/mqttTest');
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/main', function(req, res, next) {
   res.render('test/main', {topic: process.env.TEST_TOPIC});
 });
 
