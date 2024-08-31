@@ -8,10 +8,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const ejsMate = require('ejs-mate');
+const session = require('express-session');
 const {connectDB} = require("./database/connection");
 
 // Import the socket setup from controllers/socket.js
 const { app, server, io } = require('./controllers/socket'); // Import from socket.js
+
+// Set up the session, define before router
+const sessionOptions = { secret: 'thisisnotagoodsecret', resave: false, saveUninitialized: false };
+app.use(session(sessionOptions));
 
 var indexRouter = require('./routes/iot');
 var usersRouter = require('./routes/test');
@@ -38,14 +43,24 @@ app.use(function(req, res, next) {
 });
 
 // error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+// app.use(function(err, req, res, next) {
+//   // set locals, only providing error in development
+//   res.locals.message = err.message;
+//   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+//   // Define a default error message if not provided
+//   const errorMessage = err.message || "oops! Page not found";
+
+//   // render the error page
+//   res.status(err.status || 500);
+//   res.render('error2', { errorMessage });
+// });
+
+app.use((err, req, res, next) => {
+  console.error("Error occurred:", err.message);
+
+  // Respond with a generic error message
+  res.status(err.status || 500).json({ error: err.message });
 });
 
 const port = process.env.PORT || 3000;
