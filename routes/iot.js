@@ -1,5 +1,7 @@
 var express = require('express');
 var router = express.Router();
+var fs = require('fs');
+var path = require('path');
 var mongooseController = require('../controllers/mongooseController');
 const { getLocationName, setDefaultSessionValues, saveData, debuggingSession } = require('../controllers/session');
 
@@ -38,6 +40,8 @@ router.get('/graph/:id', function(req, res, next) {
     req.session.userId = id;
     req.session.locationName = locationName;
     const data = {id, locationName};
+
+
     res.render('iot/graph',{data})
   }catch(error){
     console.error('Error fetching data from Graph page:', error);
@@ -50,15 +54,27 @@ router.get('/durianTunggal/latest', mongooseController.getLast10DurianTunggalDat
 
 router.get('/alert', async (req, res, next) => {
   try {
-    
     setDefaultSessionValues(req);
+
+    // Fetching data asynchronously from the saveData function
     const data = await saveData(req.session.userId, req.session.locationName);
 
-    res.render('iot/alert', { data });
+    // Reading the JSON file asynchronously
+    fs.readFile(path.join(__dirname, '../data.json'), 'utf8', (err, fileData) => {
+      if (err) {
+        return next(err); // Pass the error to the error handler middleware
+      }
+
+      // Parsing the JSON file data
+      const jsonData = JSON.parse(fileData);
+
+      // Rendering the 'iot/alert' view with the combined data
+      res.render('iot/alert', { data, data2: jsonData});
+    });
   } catch (error) {
     console.log("fail");
-    
-    next(error); // Pass errors to the error handler middleware
+
+    next(error); // Pass the error to the error handler middleware
   }
 });
 

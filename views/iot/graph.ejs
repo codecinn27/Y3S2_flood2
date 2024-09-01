@@ -2,3 +2,49 @@
 <h1>Graph</h1>
 <h2><%= data.id %></h2>
 <h2><%= data.locationName %></h2>
+
+
+<% data.forEach(item => { %>
+    <div class="w-full flex justify-center p-1">
+        <div class="w-full max-w-3xl p-2 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+            <div class="mb-4">
+                <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white"><%= new Date(item.time).toLocaleString() %></h5>
+            </div>
+            <!-- 3 x 2 Grid layout -->
+            <div class="grid grid-cols-3 gap-4 mb-4">
+                <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                    <i class="fa fa-thermometer-full fa-2x"  class="h-12 w-auto mb-2" aria-hidden="true"></i>
+                    <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Temperature</h6>
+                    <p class="text-lg font-bold text-gray-900 dark:text-white"><%= item.tempC.toFixed(1) %>°C</p>
+                </div>
+                <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                    <i class="fa fa-tint fa-2x" aria-hidden="true" class="h-12 w-auto mb-2"></i>
+                    <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Humidity</h6>
+                    <p class="text-lg font-bold text-gray-900 dark:text-white"><%= item.humidity %>%</p>
+                </div>
+                <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                    <i class="fa fa-line-chart fa-2x" aria-hidden="true" class="h-12 w-auto mb-2"></i>
+                    <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Rain Value</h6>
+                    <p class="text-lg font-bold text-gray-900 dark:text-white"><%= item.rain %> mm</p>
+                </div>
+                <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                    <i class="fa fa-umbrella fa-2x" aria-hidden="true" class="h-12 w-auto mb-2"></i>
+                    <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Rain Status</h6>
+                    <p class="text-lg font-bold text-gray-900 dark:text-white"><%= item.rainOutput %></p>
+                </div>
+                <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                    <i class="fa fa-window-maximize fa-2x" aria-hidden="true" class="h-12 w-auto mb-2"></i>
+                    <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Water Level</h6>
+                    <p class="text-lg font-bold text-gray-900 dark:text-white">XXX cm</p>
+                </div>
+                <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                    <i class="fa fa-bullseye fa-2x" aria-hidden="true" class="h-12 w-auto mb-2"></i>
+                    <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Status</h6>
+                    <p class="text-lg font-bold text-gray-900 dark:text-white">Safe</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    
+<% }); %>
