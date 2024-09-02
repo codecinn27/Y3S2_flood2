@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <title>Graph 3</title>
+</head>
+<body>
+    <div class="w-full md:w-1/3 px-4"> <!-- Tailwind CSS classes -->
+        <div class="box box3 bg-white p-4 rounded shadow">
+          <div id="spark1"></div>
+        </div>
+    </div>
+    <script>
+        var spark1 = {
+            chart: {
+                id: 'sparkline3',
+                group: 'sparklines',
+                type: 'area',
+                height: 160,
+                sparkline: {
+                enabled: true
+                },
+            },
+            stroke: {
+                curve: 'straight'
+            },
+            fill: {
+                opacity: 1,
+            },
+            series: [{
+                name: 'Profits',
+                data: [2,4,5,6,7,8,2,33,42]
+            }],
+            labels: [...Array(24).keys()].map(n => `2018-09-0${n+1}`),
+            xaxis: {
+                type: 'datetime',
+            },
+            yaxis: {
+                min: 0
+            },
+            colors: ['#6A9C89'],
+            title: {
+                text: '$520',
+                offsetX: 30,
+                style: {
+                fontSize: '24px',
+                cssClass: 'apexcharts-yaxis-title'
+                }
+            },
+            subtitle: {
+                text: 'Profits',
+                offsetX: 30,
+                style: {
+                fontSize: '14px',
+                cssClass: 'apexcharts-yaxis-title'
+                }
+            }
+        }
+        new ApexCharts(document.querySelector("#spark1"), spark1).render();
+
+        const socket = io();
+
+        socket.on('mqtt-message', (data) => {
+            const messagesDiv = document.getElementById('messages');
+            const newMessage = document.createElement('p');
+            newMessage.classList.add('p-2', 'bg-white', 'rounded-lg', 'shadow', 'border-l-4', 'border-blue-500');
+            newMessage.textContent = `Topic: ${data.topic}, Message: ${data.message}`;
+            messagesDiv.appendChild(newMessage);
+        });
+
+        function publishMessage() {
+            const topic = document.getElementById('topic').value;
+            const messageText = document.getElementById('message').value;
+            socket.emit('publish', {topic, message: messageText});
+        }
+        function subscribeToTopic() {
+            const topic = document.getElementById('subscribeTopic').value;
+            socket.emit('subscribe', topic);
+            }
+    </script>
+</body>
+</html>

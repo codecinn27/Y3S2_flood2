@@ -27,4 +27,8 @@ router.get('/graph2', function(req, res, next) {
 
 router.get('/history', test.displayDataPerMinute);
 
+router.get('/graph3',function(req,res,next){
+  res.render('test/graph3');
+})
+
 module.exports = router;
