@@ -1,80 +1,254 @@
 <% layout('layouts/boilerplate') %>
 <h1>Dashboard</h1>
 <h2><%= data.locationName %></h2>
-
-<div class="w-full mt-20 max-w-xl mx-auto">
-    <!-- Tab Buttons -->
-    <div class="bg-blue-500 p-2 rounded-t-lg">
-      <div class="flex justify-center space-x-4">
-        <button class="px-4 py-2 text-white font-semibold border-b-4 border-blue-700 hover:bg-blue-700 focus:outline-none tab-button" onclick="showTab('tab1')">Tab 1</button>
-        <button class="px-4 py-2 text-white font-semibold border-b-4 border-blue-700 hover:bg-blue-700 focus:outline-none tab-button" onclick="showTab('tab2')">Tab 2</button>
-        <button class="px-4 py-2 text-white font-semibold border-b-4 border-blue-700 hover:bg-blue-700 focus:outline-none tab-button" onclick="showTab('tab3')">Tab 3</button>
-      </div>
-    </div>
-  
-    <!-- Tab Content -->
-    <div id="tab1" class="p-4 tab-content bg-white shadow-md rounded-lg">
-      <h2 class="text-2xl font-semibold mb-2 text-blue-700">Tab 1 Content</h2>
-      <p>
-        Vestibulum condimentum imperdiet velit nec ornare. Nullam lobortis urna posuere quam porta consequat. Donec
-        commodo diam lectus, sit amet tempor dolor scelerisque eget. Vestibulum at lectus dui. Maecenas consectetur tempor
-        ipsum non porttitor. Cras accumsan mattis aliquam. Fusce eleifend maximus elit facilisis condimentum. Mauris non
-        risus sed ligula convallis fermentum.
-        <br>
-        Quisque eu purus nunc. Ut eget ligula ac lorem laoreet scelerisque in ut
-        nulla. Quisque volutpat elit eget tellus pharetra, vel sollicitudin velit scelerisque. Vivamus ac libero eu nunc
-        congue malesuada eu vitae est.
-      </p>
-    </div>
-    <div id="tab2" class="p-4 tab-content bg-white shadow-md rounded-lg hidden">
-      <h2 class="text-2xl font-semibold mb-2 text-blue-700">Tab 2 Content</h2>
-      <p>Phasellus eget euismod libero, nec ullamcorper justo. Phasellus eget euismod libero, nec ullamcorper justo.
-        Phasellus eget euismod libero, nec ullamcorper justo. Etiam eget augue in ante gravida facilisis.</p>
-    </div>
-    <div id="tab3" class="p-4 tab-content bg-white shadow-md rounded-lg hidden">
-      <h2 class="text-2xl font-semibold mb-2 text-blue-700">Tab 3 Content</h2>
-      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Sed ut
-        perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium. Sed ut perspiciatis
-        unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
-    </div>
-  
+<div class="w-full md:w-1/3 px-4"> <!-- Tailwind CSS classes -->
+  <div class="box box3 bg-white p-4 rounded shadow">
+    <div id="spark_water"></div>
   </div>
-  
-  <style>
-    .tab-button.active {
-      background-color: #fff;
-      border-color: #4299e1;
-      color: #4299e1;
-    }
-  </style>
-  
-  <script>
-    function showTab(tabId) {
-      // Hide all tab content
-      const tabContents = document.querySelectorAll('.tab-content');
-      tabContents.forEach((content) => {
-        content.classList.add('hidden');
-      });
-  
-      // Show the selected tab content
-      const selectedTab = document.getElementById(tabId);
-      if (selectedTab) {
-        selectedTab.classList.remove('hidden');
+</div>
+<div class="w-full md:w-1/3 px-4"> <!-- Tailwind CSS classes -->
+  <div class="box box3 bg-white p-4 rounded shadow">
+    <div id="spark_temp"></div>
+  </div>
+</div>
+<div class="w-full md:w-1/3 px-4"> <!-- Tailwind CSS classes -->
+  <div class="box box3 bg-white p-4 rounded shadow">
+    <div id="spark_humidity"></div>
+  </div>
+</div>
+
+<script>
+  var spark_water = {
+      chart: {
+          id: 'sparkline1',
+          group: 'sparklines',
+          type: 'area',
+          height: 160,
+          sparkline: {
+              enabled: true
+          },
+      },
+      animations: {
+          enabled: true,
+          easing: 'linear',
+          dynamicAnimation: {
+              speed: 200
+          }
+      },
+      stroke: {
+          curve: 'straight'
+      },
+      fill: {
+          opacity: 1,
+      },
+      series: [{
+          name: 'Water Level',
+          data: []
+      }],
+      labels: [],
+      xaxis: {
+          type: 'datetime',
+      },
+      yaxis: {
+          min: 0
+      },
+      colors: ['#48CFCB'],
+      title: {
+          text: '0 cm',
+          offsetX: 30,
+          style: {
+              fontSize: '24px',
+              cssClass: 'apexcharts-yaxis-title'
+          }
+      },
+      subtitle: {
+          text: 'Water Level Monitoring in cm',
+          offsetX: 30,
+          style: {
+              fontSize: '14px',
+              cssClass: 'apexcharts-yaxis-title'
+          }
       }
-  
-      // Remove the 'active' class from all tab buttons
-      const tabButtons = document.querySelectorAll('.tab-button');
-      tabButtons.forEach((button) => {
-        button.classList.remove('active');
-      });
-  
-      // Add the 'active' class to the clicked tab button
-      const clickedButton = document.querySelector(`[onclick="showTab('${tabId}')"]`);
-      if (clickedButton) {
-        clickedButton.classList.add('active');
+  }
+
+  var chart_water = new ApexCharts(document.querySelector("#spark_water"), spark_water);
+  chart_water.render();
+
+  var spark_temp = {
+      chart: {
+          id: 'sparkline2',
+          group: 'sparklines2',
+          type: 'area',
+          height: 160,
+          sparkline: {
+              enabled: true
+          },
+      },
+      animations: {
+          enabled: true,
+          easing: 'linear',
+          dynamicAnimation: {
+              speed: 200
+          }
+      },
+      stroke: {
+          curve: 'straight'
+      },
+      fill: {
+          opacity: 1,
+      },
+      series: [{
+          name: 'Temperature',
+          data: []
+      }],
+      labels: [],
+      xaxis: {
+          type: 'datetime',
+      },
+      yaxis: {
+          min: 0
+      },
+      colors: ['#C7253E'],
+      title: {
+          text: '28 °C',
+          offsetX: 30,
+          style: {
+              fontSize: '24px',
+              cssClass: 'apexcharts-yaxis-title'
+          }
+      },
+      subtitle: {
+          text: 'Temperature Monitoring in °C',
+          offsetX: 30,
+          style: {
+              fontSize: '14px',
+              cssClass: 'apexcharts-yaxis-title'
+          }
       }
-    }
+  }
+
+  var chart_temp = new ApexCharts(document.querySelector("#spark_temp"), spark_temp);
+  chart_temp.render();
+
+  var spark_humidity = {
+      chart: {
+          id: 'sparkline3',
+          group: 'sparklines3',
+          type: 'area',
+          height: 160,
+          sparkline: {
+              enabled: true
+          },
+      },
+      animations: {
+          enabled: true,
+          easing: 'linear',
+          dynamicAnimation: {
+              speed: 200
+          }
+      },
+      stroke: {
+          curve: 'straight'
+      },
+      fill: {
+          opacity: 1,
+      },
+      series: [{
+          name: 'Humidity Level',
+          data: []
+      }],
+      labels: [],
+      xaxis: {
+          type: 'datetime',
+      },
+      yaxis: {
+          min: 0
+      },
+      colors: ['#E1D7B7'],
+      title: {
+          text: '0 %',
+          offsetX: 30,
+          style: {
+              fontSize: '24px',
+              cssClass: 'apexcharts-yaxis-title'
+          }
+      },
+      subtitle: {
+          text: 'Humidity Monitoring in %',
+          offsetX: 30,
+          style: {
+              fontSize: '14px',
+              cssClass: 'apexcharts-yaxis-title'
+          }
+      }
+  }
+
+  var chart_humidity = new ApexCharts(document.querySelector("#spark_humidity"), spark_humidity);
+  chart_humidity.render();
   
-    // Initialize the first tab
-    showTab('tab1');
-  </script>
+  const socket = io();
+
+  // Function to update charts with new data
+  function updateCharts(newData) {
+      // Extract the current series data and labels for each chart
+      let waterSeriesData = chart_water.w.config.series[0].data;
+      let tempSeriesData = chart_temp.w.config.series[0].data;
+      let humiditySeriesData = chart_humidity.w.config.series[0].data;
+      let label_water = chart_water.w.config.labels;
+      let label_temp = chart_temp.w.config.labels;
+      let label_humidity = chart_humidity.w.config.labels;
+
+      // Combine date and time to form a datetime string
+      let datetime = newData.date + ' ' + newData.time;
+
+      // Add new data points
+      waterSeriesData.push(newData.distance_cm);
+      tempSeriesData.push(newData.tempC);
+      humiditySeriesData.push(newData.humidity);
+      label_water.push(datetime);
+      label_temp.push(datetime);
+      label_humidity.push(datetime);
+
+      // Limit data points to the last 24 (or any other limit you prefer)
+      if (waterSeriesData.length > 24) {
+          waterSeriesData.shift();
+          tempSeriesData.shift();
+          humiditySeriesData.shift();
+          label_water.shift();
+          label_temp.shift();
+          label_humidity.shift();
+      }
+
+      // Update the charts with new data and labels
+      chart_water.updateSeries([{ data: waterSeriesData }], true); // true for smooth transition
+      chart_temp.updateSeries([{ data: tempSeriesData }], true);
+      chart_humidity.updateSeries([{ data: humiditySeriesData }], true);
+
+      // Update titles with the latest values
+      chart_water.updateOptions({
+          title: {
+              text: `${newData.distance_cm.toFixed(2)} cm`
+          }
+      });
+      chart_temp.updateOptions({
+          title: {
+              text: `${newData.tempC.toFixed(2)} °C`
+          }
+      });
+      chart_humidity.updateOptions({
+          title: {
+              text: `${newData.humidity.toFixed(2)} %`
+          }
+      });
+  }
+
+  socket.on('mqtt-message', (data) => {
+      const messageData = JSON.parse(data.message);
+
+      // Example format of messageData:
+      // { distance_cm: 29.22, tempC: 28.5, humidity: 65.2, date: '2024-09-03', time: '00:04:11' }
+
+      updateCharts(messageData);
+  });
+
+</script>
