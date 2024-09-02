@@ -78,7 +78,7 @@ router.get('/alert', async (req, res, next) => {
   }
 });
 
-router.get('/about', async(req, res, next) =>{
+router.get('/', async(req, res, next) =>{
   try{
     setDefaultSessionValues(req);
     const data = await saveData(req.session.userId, req.session.locationName);
@@ -90,9 +90,6 @@ router.get('/about', async(req, res, next) =>{
   }
 });
 
-router.get('/', function(req, res, next) {
-  res.render('iot/dashboard2');
-});
 
 /* GET home page. // The most general route with parameters should be placed last */
 router.get('/:id', function(req, res, next) {
