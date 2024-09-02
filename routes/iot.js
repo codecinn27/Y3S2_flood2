@@ -19,7 +19,17 @@ router.get('/history/:id', async(req,res,next)=>{
     req.session.userId = id;
     req.session.locationName = locationName;
     const data = {id, locationName};
-    res.render('iot/history',{data})
+
+    // Reading the JSON file asynchronously
+    fs.readFile(path.join(__dirname, '../data.json'), 'utf8', (err, fileData) => {
+      if (err) {
+        return next(err); // Pass the error to the error handler middleware
+      }
+
+    // Parsing the JSON file data
+    const jsonData = JSON.parse(fileData);
+    res.render('iot/history',{data, data2: jsonData});
+    });
   }catch(error){
     console.error('Error fetching data from History page:', error);
     res.status(500).json({ error: 'Failed to fetch data from history controller errors' });   
@@ -40,9 +50,9 @@ router.get('/graph/:id', function(req, res, next) {
     req.session.userId = id;
     req.session.locationName = locationName;
     const data = {id, locationName};
+   
 
-
-    res.render('iot/graph',{data})
+    res.render('iot/graph',{data});
   }catch(error){
     console.error('Error fetching data from Graph page:', error);
     res.status(500).json({ error: 'Failed to fetch data from Graph controller errors' });
