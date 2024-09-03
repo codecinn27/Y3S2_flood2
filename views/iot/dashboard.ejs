@@ -1,254 +1,356 @@
 <% layout('layouts/boilerplate') %>
-<h1>Dashboard</h1>
-<h2><%= data.locationName %></h2>
-<div class="w-full md:w-1/3 px-4"> <!-- Tailwind CSS classes -->
-  <div class="box box3 bg-white p-4 rounded shadow">
-    <div id="spark_water"></div>
-  </div>
-</div>
-<div class="w-full md:w-1/3 px-4"> <!-- Tailwind CSS classes -->
-  <div class="box box3 bg-white p-4 rounded shadow">
-    <div id="spark_temp"></div>
-  </div>
-</div>
-<div class="w-full md:w-1/3 px-4"> <!-- Tailwind CSS classes -->
-  <div class="box box3 bg-white p-4 rounded shadow">
-    <div id="spark_humidity"></div>
-  </div>
-</div>
+    <!-- <h2>
+        <%= data.locationName %>
+    </h2> -->
+    <div class="container mx-auto px-4 mt-2">
+        <!-- 1st Row -->
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full md:w-1/3 px-4 mb-4"> <!-- 1/3 width for each box -->
+                <div class="box box3 bg-white p-4 rounded shadow">
+                    <div id="spark_water"></div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 px-4 mb-4"> <!-- 1/3 width for each box -->
+                <div class="box box3 bg-white p-4 rounded shadow">
+                    <div id="spark_temp"></div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 px-4 mb-4"> <!-- 1/3 width for each box -->
+                <div class="box box3 bg-white p-4 rounded shadow">
+                    <div id="spark_humidity"></div>
+                </div>
+            </div>
+        </div>
 
-<script>
-  var spark_water = {
-      chart: {
-          id: 'sparkline1',
-          group: 'sparklines',
-          type: 'area',
-          height: 160,
-          sparkline: {
-              enabled: true
-          },
-      },
-      animations: {
-          enabled: true,
-          easing: 'linear',
-          dynamicAnimation: {
-              speed: 200
-          }
-      },
-      stroke: {
-          curve: 'straight'
-      },
-      fill: {
-          opacity: 1,
-      },
-      series: [{
-          name: 'Water Level',
-          data: []
-      }],
-      labels: [],
-      xaxis: {
-          type: 'datetime',
-      },
-      yaxis: {
-          min: 0
-      },
-      colors: ['#48CFCB'],
-      title: {
-          text: '0 cm',
-          offsetX: 30,
-          style: {
-              fontSize: '24px',
-              cssClass: 'apexcharts-yaxis-title'
-          }
-      },
-      subtitle: {
-          text: 'Water Level Monitoring in cm',
-          offsetX: 30,
-          style: {
-              fontSize: '14px',
-              cssClass: 'apexcharts-yaxis-title'
-          }
-      }
-  }
+        <!-- 2nd Row -->
+        <div class="flex flex-wrap -mx-4 mb-20"> <!-- Added margin bottom -->
+            <div class="w-full px-4 mb-4"> <!-- Full width for rain_bar -->
+                <div class="box bg-white p-4 rounded shadow">
+                    <div id="rain_bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
-  var chart_water = new ApexCharts(document.querySelector("#spark_water"), spark_water);
-  chart_water.render();
 
-  var spark_temp = {
-      chart: {
-          id: 'sparkline2',
-          group: 'sparklines2',
-          type: 'area',
-          height: 160,
-          sparkline: {
-              enabled: true
-          },
-      },
-      animations: {
-          enabled: true,
-          easing: 'linear',
-          dynamicAnimation: {
-              speed: 200
-          }
-      },
-      stroke: {
-          curve: 'straight'
-      },
-      fill: {
-          opacity: 1,
-      },
-      series: [{
-          name: 'Temperature',
-          data: []
-      }],
-      labels: [],
-      xaxis: {
-          type: 'datetime',
-      },
-      yaxis: {
-          min: 0
-      },
-      colors: ['#C7253E'],
-      title: {
-          text: '28 °C',
-          offsetX: 30,
-          style: {
-              fontSize: '24px',
-              cssClass: 'apexcharts-yaxis-title'
-          }
-      },
-      subtitle: {
-          text: 'Temperature Monitoring in °C',
-          offsetX: 30,
-          style: {
-              fontSize: '14px',
-              cssClass: 'apexcharts-yaxis-title'
-          }
-      }
-  }
+    <script>
+        var spark_water = {
+            chart: {
+                id: 'sparkline1',
+                group: 'sparklines',
+                type: 'area',
+                height: 160,
+                sparkline: {
+                    enabled: true
+                },
+            },
+            animations: {
+                enabled: true,
+                easing: 'linear',
+                dynamicAnimation: {
+                    speed: 200
+                }
+            },
+            stroke: {
+                curve: 'straight'
+            },
+            fill: {
+                opacity: 1,
+            },
+            series: [{
+                name: 'Water Level',
+                data: []
+            }],
+            labels: [],
+            yaxis: {
+                min: 0
+            },
+            colors: ['#48CFCB'],
+            title: {
+                text: '0 cm',
+                offsetX: 30,
+                style: {
+                    fontSize: '24px',
+                    cssClass: 'apexcharts-yaxis-title'
+                }
+            },
+            subtitle: {
+                text: 'Water Level Monitoring in cm',
+                offsetX: 30,
+                style: {
+                    fontSize: '14px',
+                    cssClass: 'apexcharts-yaxis-title'
+                }
+            }
+        }
 
-  var chart_temp = new ApexCharts(document.querySelector("#spark_temp"), spark_temp);
-  chart_temp.render();
+        var chart_water = new ApexCharts(document.querySelector("#spark_water"), spark_water);
+        chart_water.render();
 
-  var spark_humidity = {
-      chart: {
-          id: 'sparkline3',
-          group: 'sparklines3',
-          type: 'area',
-          height: 160,
-          sparkline: {
-              enabled: true
-          },
-      },
-      animations: {
-          enabled: true,
-          easing: 'linear',
-          dynamicAnimation: {
-              speed: 200
-          }
-      },
-      stroke: {
-          curve: 'straight'
-      },
-      fill: {
-          opacity: 1,
-      },
-      series: [{
-          name: 'Humidity Level',
-          data: []
-      }],
-      labels: [],
-      xaxis: {
-          type: 'datetime',
-      },
-      yaxis: {
-          min: 0
-      },
-      colors: ['#E1D7B7'],
-      title: {
-          text: '0 %',
-          offsetX: 30,
-          style: {
-              fontSize: '24px',
-              cssClass: 'apexcharts-yaxis-title'
-          }
-      },
-      subtitle: {
-          text: 'Humidity Monitoring in %',
-          offsetX: 30,
-          style: {
-              fontSize: '14px',
-              cssClass: 'apexcharts-yaxis-title'
-          }
-      }
-  }
+        var spark_temp = {
+            chart: {
+                id: 'sparkline2',
+                group: 'sparklines2',
+                type: 'area',
+                height: 160,
+                sparkline: {
+                    enabled: true
+                },
+            },
+            animations: {
+                enabled: true,
+                easing: 'linear',
+                dynamicAnimation: {
+                    speed: 200
+                }
+            },
+            stroke: {
+                curve: 'straight'
+            },
+            fill: {
+                opacity: 1,
+            },
+            series: [{
+                name: 'Temperature',
+                data: []
+            }],
+            labels: [],
+            yaxis: {
+                min: 0
+            },
+            colors: ['#C7253E'],
+            title: {
+                text: '28 °C',
+                offsetX: 30,
+                style: {
+                    fontSize: '24px',
+                    cssClass: 'apexcharts-yaxis-title'
+                }
+            },
+            subtitle: {
+                text: 'Temperature Monitoring in °C',
+                offsetX: 30,
+                style: {
+                    fontSize: '14px',
+                    cssClass: 'apexcharts-yaxis-title'
+                }
+            }
+        }
 
-  var chart_humidity = new ApexCharts(document.querySelector("#spark_humidity"), spark_humidity);
-  chart_humidity.render();
-  
-  const socket = io();
+        var chart_temp = new ApexCharts(document.querySelector("#spark_temp"), spark_temp);
+        chart_temp.render();
 
-  // Function to update charts with new data
-  function updateCharts(newData) {
-      // Extract the current series data and labels for each chart
-      let waterSeriesData = chart_water.w.config.series[0].data;
-      let tempSeriesData = chart_temp.w.config.series[0].data;
-      let humiditySeriesData = chart_humidity.w.config.series[0].data;
-      let label_water = chart_water.w.config.labels;
-      let label_temp = chart_temp.w.config.labels;
-      let label_humidity = chart_humidity.w.config.labels;
+        var spark_humidity = {
+            chart: {
+                id: 'sparkline3',
+                group: 'sparklines3',
+                type: 'area',
+                height: 160,
+                sparkline: {
+                    enabled: true
+                },
+            },
+            animations: {
+                enabled: true,
+                easing: 'linear',
+                dynamicAnimation: {
+                    speed: 200
+                }
+            },
+            stroke: {
+                curve: 'straight'
+            },
+            fill: {
+                opacity: 1,
+            },
+            series: [{
+                name: 'Humidity Level',
+                data: []
+            }],
+            labels: [],
+            yaxis: {
+                min: 0
+            },
+            colors: ['#E1D7B7'],
+            title: {
+                text: '0 %',
+                offsetX: 30,
+                style: {
+                    fontSize: '24px',
+                    cssClass: 'apexcharts-yaxis-title'
+                }
+            },
+            subtitle: {
+                text: 'Humidity Monitoring in %',
+                offsetX: 30,
+                style: {
+                    fontSize: '14px',
+                    cssClass: 'apexcharts-yaxis-title'
+                }
+            }
+        }
 
-      // Combine date and time to form a datetime string
-      let datetime = newData.date + ' ' + newData.time;
+        var chart_humidity = new ApexCharts(document.querySelector("#spark_humidity"), spark_humidity);
+        chart_humidity.render();
+        var colorPalette = ['#FEB019', '#FF4560']
+        var optionsBar = {
+            chart: {
+                type: 'bar',
+                height: 300,
+                width: '100%',
+                stacked: true,
+            },
+            plotOptions: {
+                bar: {
+                    columnWidth: '45%',
+                }
+            },
+            colors: colorPalette,
+            series: [{
+                name: "Light Rain",
+                data: [],
+            }, {
+                name: "Heavy Rain",
+                data: [],
+            }],
+            xaxis: {
+                categories: [],
+                labels: {
+                    show: false
+                },
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: true
+                },
+            },
+            yaxis: {
+                axisBorder: {
+                    show: false
+                },
+                axisTicks: {
+                    show: false
+                },
+                labels: {
+                    style: {
+                        colors: '#78909c'
+                    }
+                }
+            },
+            dataLabels: {
+                enabled: false  // Disable the data labels on the bars
+            },
+            title: {
+                text: 'Rain Value',
+                align: 'left',
+                style: {
+                    fontSize: '18px'
+                }
+            }
 
-      // Add new data points
-      waterSeriesData.push(newData.distance_cm);
-      tempSeriesData.push(newData.tempC);
-      humiditySeriesData.push(newData.humidity);
-      label_water.push(datetime);
-      label_temp.push(datetime);
-      label_humidity.push(datetime);
+        }
 
-      // Limit data points to the last 24 (or any other limit you prefer)
-      if (waterSeriesData.length > 24) {
-          waterSeriesData.shift();
-          tempSeriesData.shift();
-          humiditySeriesData.shift();
-          label_water.shift();
-          label_temp.shift();
-          label_humidity.shift();
-      }
+        var chartBar = new ApexCharts(document.querySelector('#rain_bar'), optionsBar);
+        chartBar.render();
+        const socket = io();
 
-      // Update the charts with new data and labels
-      chart_water.updateSeries([{ data: waterSeriesData }], true); // true for smooth transition
-      chart_temp.updateSeries([{ data: tempSeriesData }], true);
-      chart_humidity.updateSeries([{ data: humiditySeriesData }], true);
+        // Function to update charts with new data
+        function updateCharts(newData) {
+            // Extract the current series data and labels for each chart
+            let waterSeriesData = chart_water.w.config.series[0].data;
+            let tempSeriesData = chart_temp.w.config.series[0].data;
+            let humiditySeriesData = chart_humidity.w.config.series[0].data;
+            let label_water = chart_water.w.config.labels;
+            let label_temp = chart_temp.w.config.labels;
+            let label_humidity = chart_humidity.w.config.labels;
+            //bar rain
+            let lightRainSeries = chartBar.w.config.series[0].data;
+            let heavyRainSeries = chartBar.w.config.series[1].data;
+            let categories = chartBar.w.config.xaxis.categories;
 
-      // Update titles with the latest values
-      chart_water.updateOptions({
-          title: {
-              text: `${newData.distance_cm.toFixed(2)} cm`
-          }
-      });
-      chart_temp.updateOptions({
-          title: {
-              text: `${newData.tempC.toFixed(2)} °C`
-          }
-      });
-      chart_humidity.updateOptions({
-          title: {
-              text: `${newData.humidity.toFixed(2)} %`
-          }
-      });
-  }
+            // Combine date and time to form a datetime string
+            let datetime = `${newData.date} ${newData.time}`;
 
-  socket.on('mqtt-message', (data) => {
-      const messageData = JSON.parse(data.message);
+            // Add new data points with datetime labels
+            waterSeriesData.push({ x: datetime, y: newData.distance_cm });
+            tempSeriesData.push({ x: datetime, y: newData.tempC });
+            humiditySeriesData.push({ x: datetime, y: newData.humidity });
 
-      // Example format of messageData:
-      // { distance_cm: 29.22, tempC: 28.5, humidity: 65.2, date: '2024-09-03', time: '00:04:11' }
+            // Determine if the new data falls into Light Rain or Heavy Rain
+            if (newData.rain > 30) {
+                lightRainSeries.push(30);  // Light Rain is capped at 30
+                heavyRainSeries.push(newData.rain - 30); // The rest goes to Heavy Rain
+            } else {
+                lightRainSeries.push(newData.rain);
+                heavyRainSeries.push(0); // No Heavy Rain if less than 30
+            }
 
-      updateCharts(messageData);
-  });
+            // Add the new datetime to the categories
+            categories.push(datetime);
 
-</script>
+            // Limit data points to the last 24 (or any other limit you prefer)
+            if (waterSeriesData.length > 24) {
+                waterSeriesData.shift();
+                tempSeriesData.shift();
+                humiditySeriesData.shift();
+                label_water.shift();
+                label_temp.shift();
+                label_humidity.shift();
+            }
+
+            // Limit data points to the last 24 for each series and labels
+            if (lightRainSeries.length > 24) {
+                lightRainSeries.shift();
+            }
+            if (heavyRainSeries.length > 24) {
+                heavyRainSeries.shift();
+            }
+            if (categories.length > 24) {
+                categories.shift();
+            }
+
+            // Update the charts with new data and labels
+            chart_water.updateSeries([{ data: waterSeriesData }], true); // true for smooth transition
+            chart_temp.updateSeries([{ data: tempSeriesData }], true);
+            chart_humidity.updateSeries([{ data: humiditySeriesData }], true);
+            // Update the bar chart with new series data and categories (x-axis labels)
+            chartBar.updateSeries([
+                { data: lightRainSeries },
+                { data: heavyRainSeries }
+            ], true); // true for smooth transition
+
+            chartBar.updateOptions({
+                xaxis: {
+                    categories: categories
+                }
+            });
+
+            // Update titles with the latest values
+            chart_water.updateOptions({
+                title: {
+                    text: `${newData.distance_cm.toFixed(2)} cm`
+                }
+            });
+            chart_temp.updateOptions({
+                title: {
+                    text: `${newData.tempC.toFixed(2)} °C`
+                }
+            });
+            chart_humidity.updateOptions({
+                title: {
+                    text: `${newData.humidity.toFixed(2)} %`
+                }
+            });
+        }
+
+        socket.on('mqtt-message', (data) => {
+            const messageData = JSON.parse(data.message);
+
+            // Example format of messageData:
+            // { distance_cm: 29.22, tempC: 28.5, humidity: 65.2, date: '2024-09-03', time: '00:04:11' }
+
+            updateCharts(messageData);
+        });
+
+    </script>
