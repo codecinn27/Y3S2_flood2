@@ -61,6 +61,7 @@ router.get('/graph/:id', function(req, res, next) {
 });
 
 router.get('/durianTunggal/latest', mongooseController.getLast10DurianTunggalData);
+router.get('/ayerKeroh/latest', mongooseController.getLast10AyerKerohData);
 
 router.get('/alert', async (req, res, next) => {
   try {
