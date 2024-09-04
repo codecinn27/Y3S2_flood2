@@ -62,10 +62,86 @@ const getLast10AyerKerohData = async(req, res) => {
   }
 }
 
+const getAllAyerKerohData = async(req, res) => {
+  try {
+    const data = await AyerKeroh.find().sort({ time: -1 });
+    res.json(data);
+  } catch (err) {
+    console.error('Error fetching data from MongoDB:', err);
+    res.status(500).json({ error: 'An error occurred while fetching data' });
+  }
+}
+
+const getAllDurianTunggalData = async(req, res) => {
+  try {
+    const data = await DurianTunggal.find().sort({ time: -1 });
+    res.json(data);
+  } catch (err) {
+    console.error('Error fetching data from MongoDB:', err);
+    res.status(500).json({ error: 'An error occurred while fetching data' });
+  }
+}
+
+const returnAyerKerohData = async () => {
+  try {
+    const data = await AyerKeroh.find().sort({ time: -1 });
+    //console.log("data: " , data);
+    return data;
+  } catch (err) {
+    console.error('Error fetching Ayer Keroh data from MongoDB:', err);
+    throw new Error('An error occurred while fetching Ayer Keroh data');
+  }
+}
+
+const returnDurianTunggalData = async () => {
+  try {
+    const data = await DurianTunggal.find().sort({ time: -1 });
+    //console.log("Data fetched from MongoDB:", data);
+    return data;
+  } catch (err) {
+    console.error('Error fetching Durian Tunggal data from MongoDB:', err);
+    throw new Error('An error occurred while fetching Durian Tunggal data');
+  }
+}
+
+const returnAlertData = async () => {
+  try {
+    let ayerKerohAlerts = await AyerKeroh.find({ status: { $in: ['Danger', 'Warning'] } });
+    ayerKerohAlerts = ayerKerohAlerts.map(alert => ({
+        ...alert.toObject(), // Convert mongoose document to plain object
+        location: "Ayer Keroh",
+        dateTime: new Date(`${alert.date}T${alert.time}`) // Combine date and time into a Date object
+    }));
+
+    let durianTunggalAlerts = await DurianTunggal.find({ status: { $in: ['Danger', 'Warning'] } });
+    durianTunggalAlerts = durianTunggalAlerts.map(alert => ({
+        ...alert.toObject(), // Convert mongoose document to plain object
+        location: "Durian Tunggal",
+        dateTime: new Date(`${alert.date}T${alert.time}`) // Combine date and time into a Date object
+    }));
+
+    // Combine both alert arrays
+    let alertStatuses = [...ayerKerohAlerts, ...durianTunggalAlerts];
+
+    // Sort the alerts by dateTime, with the latest first
+    alertStatuses.sort((a, b) => b.dateTime - a.dateTime);
+    console.log(alertStatuses);
+    
+    return alertStatuses;
+  } catch (err) {
+    console.error('Error fetching Durian Tunggal data from MongoDB:', err);
+    throw new Error('An error occurred while fetching Durian Tunggal data');
+  }
+}
 
 // Export all functions at once
 module.exports = {
   saveMqttData,
   getLast10DurianTunggalData,
-  getLast10AyerKerohData
+  getLast10AyerKerohData,
+  getAllAyerKerohData,
+  getAllDurianTunggalData,
+  returnAyerKerohData,
+  returnDurianTunggalData,
+  returnAlertData
 };
