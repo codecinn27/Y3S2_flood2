@@ -35,7 +35,7 @@ router.get('/history/:id', async (req, res, next) => {
 
 
 
-router.get('/graph/:id', function (req, res, next) {
+router.get('/graph/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const locationName = sessionController.getLocationName(id);
@@ -47,10 +47,15 @@ router.get('/graph/:id', function (req, res, next) {
 
     req.session.userId = id;
     req.session.locationName = locationName;
-    const data = { id, locationName };
 
+    let data2;
+    if (id === "ayerkeroh") {
+      data2 = await mongooseController.returnAyerKerohData();
+    } else if (id === "duriantunggal") {
+      data2 = await mongooseController.returnDurianTunggalData();
+    }
 
-    res.render('iot/graph', { data });
+    res.render('iot/graph', { data: { id, locationName }, data2 });
   } catch (error) {
     console.error('Error fetching data from Graph page:', error);
     res.status(500).json({ error: 'Failed to fetch data from Graph controller errors' });
@@ -93,7 +98,7 @@ router.get('/', async (req, res, next) => {
 
 
 /* GET home page. // The most general route with parameters should be placed last */
-router.get('/:id', function (req, res, next) {
+router.get('/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const locationName = sessionController.getLocationName(id);
@@ -104,9 +109,14 @@ router.get('/:id', function (req, res, next) {
     }
     req.session.userId = id;
     req.session.locationName = locationName;
-
-    const data = { id, locationName };
-    res.render('iot/dashboard', { data });
+    
+    let data2;
+    if (id === "ayerkeroh") {
+      data2 = await mongooseController.getLast24AyerKerohData();
+    } else if (id === "duriantunggal") {
+      data2 = await mongooseController.getLast24DurianTunggalData();
+    }  
+    res.render('iot/dashboard', { data:{ id, locationName } , data2});
   } catch (error) {
     console.error('Error fetching data from Home page:', error);
     res.status(500).json({ error: 'Failed to fetch data from mainpage controller errors' });

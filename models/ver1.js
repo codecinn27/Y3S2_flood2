@@ -12,7 +12,7 @@ const dataSchema = new mongoose.Schema({
     },   
     status: String,         // Status of the system (e.g., "Normal", "Warning", "Danger")
     date: String,
-    time: String, 
+    time: String,
     mongoDBtime: Date
 }, { timestamps: true }); 
 

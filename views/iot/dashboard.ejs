@@ -1,7 +1,8 @@
 <% layout('layouts/boilerplate') %>
     <!-- <h2>
         <%= data.locationName %>
-    </h2> -->
+    </h2> -->  
+
     <div class="container mx-auto px-4 mt-2">
         <!-- 1st Row -->
         <div class="flex flex-wrap -mx-4">
@@ -32,228 +33,88 @@
         </div>
     </div>
 
-
+    <script src="/javascripts/dashboard_apexChart/waterLineChart.js"></script>
+    <script src="/javascripts/dashboard_apexChart/tempLineChart.js"></script>
+    <script src="/javascripts/dashboard_apexChart/humidityLineChart.js"></script>
+    <script src="/javascripts/dashboard_apexChart/rainBarChart.js"></script>
     <script>
-        var spark_water = {
-            chart: {
-                id: 'sparkline1',
-                group: 'sparklines',
-                type: 'area',
-                height: 160,
-                sparkline: {
-                    enabled: true
-                },
-            },
-            animations: {
-                enabled: true,
-                easing: 'linear',
-                dynamicAnimation: {
-                    speed: 200
-                }
-            },
-            stroke: {
-                curve: 'straight'
-            },
-            fill: {
-                opacity: 1,
-            },
-            series: [{
-                name: 'Water Level',
-                data: []
-            }],
-            labels: [],
-            yaxis: {
-                min: 0
-            },
-            colors: ['#48CFCB'],
-            title: {
-                text: '0 cm',
-                offsetX: 30,
-                style: {
-                    fontSize: '24px',
-                    cssClass: 'apexcharts-yaxis-title'
-                }
-            },
-            subtitle: {
-                text: 'Water Level Monitoring in cm',
-                offsetX: 30,
-                style: {
-                    fontSize: '14px',
-                    cssClass: 'apexcharts-yaxis-title'
-                }
-            }
-        }
 
-        var chart_water = new ApexCharts(document.querySelector("#spark_water"), spark_water);
-        chart_water.render();
-
-        var spark_temp = {
-            chart: {
-                id: 'sparkline2',
-                group: 'sparklines2',
-                type: 'area',
-                height: 160,
-                sparkline: {
-                    enabled: true
-                },
-            },
-            animations: {
-                enabled: true,
-                easing: 'linear',
-                dynamicAnimation: {
-                    speed: 200
-                }
-            },
-            stroke: {
-                curve: 'straight'
-            },
-            fill: {
-                opacity: 1,
-            },
-            series: [{
-                name: 'Temperature',
-                data: []
-            }],
-            labels: [],
-            yaxis: {
-                min: 0
-            },
-            colors: ['#C7253E'],
-            title: {
-                text: '28 °C',
-                offsetX: 30,
-                style: {
-                    fontSize: '24px',
-                    cssClass: 'apexcharts-yaxis-title'
-                }
-            },
-            subtitle: {
-                text: 'Temperature Monitoring in °C',
-                offsetX: 30,
-                style: {
-                    fontSize: '14px',
-                    cssClass: 'apexcharts-yaxis-title'
-                }
-            }
-        }
-
-        var chart_temp = new ApexCharts(document.querySelector("#spark_temp"), spark_temp);
-        chart_temp.render();
-
-        var spark_humidity = {
-            chart: {
-                id: 'sparkline3',
-                group: 'sparklines3',
-                type: 'area',
-                height: 160,
-                sparkline: {
-                    enabled: true
-                },
-            },
-            animations: {
-                enabled: true,
-                easing: 'linear',
-                dynamicAnimation: {
-                    speed: 200
-                }
-            },
-            stroke: {
-                curve: 'straight'
-            },
-            fill: {
-                opacity: 1,
-            },
-            series: [{
-                name: 'Humidity Level',
-                data: []
-            }],
-            labels: [],
-            yaxis: {
-                min: 0
-            },
-            colors: ['#E1D7B7'],
-            title: {
-                text: '0 %',
-                offsetX: 30,
-                style: {
-                    fontSize: '24px',
-                    cssClass: 'apexcharts-yaxis-title'
-                }
-            },
-            subtitle: {
-                text: 'Humidity Monitoring in %',
-                offsetX: 30,
-                style: {
-                    fontSize: '14px',
-                    cssClass: 'apexcharts-yaxis-title'
-                }
-            }
-        }
-
-        var chart_humidity = new ApexCharts(document.querySelector("#spark_humidity"), spark_humidity);
-        chart_humidity.render();
-        var colorPalette = ['#FEB019', '#FF4560']
-        var optionsBar = {
-            chart: {
-                type: 'bar',
-                height: 300,
-                width: '100%',
-                stacked: true,
-            },
-            plotOptions: {
-                bar: {
-                    columnWidth: '45%',
-                }
-            },
-            colors: colorPalette,
-            series: [{
-                name: "Light Rain",
-                data: [],
-            }, {
-                name: "Heavy Rain",
-                data: [],
-            }],
-            xaxis: {
-                categories: [],
-                labels: {
-                    show: false
-                },
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: true
-                },
-            },
-            yaxis: {
-                axisBorder: {
-                    show: false
-                },
-                axisTicks: {
-                    show: false
-                },
-                labels: {
-                    style: {
-                        colors: '#78909c'
-                    }
-                }
-            },
-            dataLabels: {
-                enabled: false  // Disable the data labels on the bars
-            },
-            title: {
-                text: 'Rain Value',
-                align: 'left',
-                style: {
-                    fontSize: '18px'
-                }
-            }
-
-        }
-
-        var chartBar = new ApexCharts(document.querySelector('#rain_bar'), optionsBar);
-        chartBar.render();
         const socket = io();
+        // Assuming data2 is an array of objects from your MongoDB
+
+        var data2 = <%- JSON.stringify(data2) %>;
+
+        console.log("from dashboard ejs", data2);
+
+        // Function to populate charts with the last 24 data points from MongoDB (data2)
+        function populateCharts(data2) {
+            // Initialize arrays to hold the data for each chart
+            let waterSeriesData = [];
+            let tempSeriesData = [];
+            let humiditySeriesData = [];
+            let lightRainSeries = [];
+            let heavyRainSeries = [];
+            let categories = [];
+
+            // Iterate over data2 and populate arrays with values
+            data2.forEach(entry => {
+                 let datetime = `${entry.date} ${entry.time}`;
+                
+                waterSeriesData.push({x: new Date(datetime), y: entry.distance });
+                tempSeriesData.push({ x: new Date(datetime), y: entry.tempC });
+                humiditySeriesData.push({ x: new Date(datetime), y: entry.humidity });
+
+                // Rain data logic (light rain capped at 30, remainder goes to heavy rain)
+                if (entry.rain > 30) {
+                    lightRainSeries.push(30);  // Light Rain is capped at 30
+                    heavyRainSeries.push(entry.rain - 30);  // The rest goes to Heavy Rain
+                } else {
+                    lightRainSeries.push(entry.rain);
+                    heavyRainSeries.push(0);  // No Heavy Rain if less than 30
+                }
+
+                // Add the new datetime to the categories
+                categories.push(datetime);
+            });
+
+            // Update the charts with the populated data
+            chart_water.updateSeries([{ data: waterSeriesData }], true);
+            chart_temp.updateSeries([{ data: tempSeriesData }], true);
+            chart_humidity.updateSeries([{ data: humiditySeriesData }], true);
+
+            // Update the rain bar chart
+            chartBar.updateSeries([
+                { data: lightRainSeries },
+                { data: heavyRainSeries }
+            ], true);
+
+            chartBar.updateOptions({
+                xaxis: {
+                    categories: categories
+                }
+            });
+
+            // Update the titles of the sparkline charts with the latest values from data2
+            const lastEntry = data2[data2.length - 1];  // Get the latest (last) data point
+            chart_water.updateOptions({
+                title: {
+                    text: `${lastEntry.distance} cm`
+                }
+            });
+            chart_temp.updateOptions({
+                title: {
+                    text: `${lastEntry.tempC} °C`
+                }
+            });
+            chart_humidity.updateOptions({
+                title: {
+                    text: `${lastEntry.humidity} %`
+                }
+            });
+        }
+
+        // Call the function to populate the charts with data2 on page load
+        populateCharts(data2);
 
         // Function to update charts with new data
         function updateCharts(newData) {
@@ -329,17 +190,17 @@
             // Update titles with the latest values
             chart_water.updateOptions({
                 title: {
-                    text: `${newData.distance_cm.toFixed(2)} cm`
+                    text: `${newData.distance_cm} cm`
                 }
             });
             chart_temp.updateOptions({
                 title: {
-                    text: `${newData.tempC.toFixed(2)} °C`
+                    text: `${newData.tempC} °C`
                 }
             });
             chart_humidity.updateOptions({
                 title: {
-                    text: `${newData.humidity.toFixed(2)} %`
+                    text: `${newData.humidity} %`
                 }
             });
         }

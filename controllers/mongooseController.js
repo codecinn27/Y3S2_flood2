@@ -62,6 +62,33 @@ const getLast10AyerKerohData = async(req, res) => {
   }
 }
 
+const getLast24DurianTunggalData = async(req, res) => {
+  try {
+    const data = await DurianTunggal.find().sort({ time: -1 })
+          .limit(24)      
+          .select('-_id tempC humidity rain distance date time mongoDBtime'); 
+          // Exclude _id, createdAt, and updatedAt fields;
+    return data;
+  } catch (err) {
+    console.error('Error fetching Ayer Keroh data from MongoDB:', err);
+    throw new Error('An error occurred while fetching Ayer Keroh data');
+  }
+}
+
+const getLast24AyerKerohData = async(req, res) => {
+  try {
+    const data = await AyerKeroh.find().sort({ time: -1 })
+            .limit(24)
+            .select('-_id tempC humidity rain distance date time mongoDBtime'); 
+            // Exclude _id, createdAt, and updatedAt fields
+
+    return data;
+  } catch (err) {
+    console.error('Error fetching Ayer Keroh data from MongoDB:', err);
+    throw new Error('An error occurred while fetching Ayer Keroh data');
+  }
+}
+
 const getAllAyerKerohData = async(req, res) => {
   try {
     const data = await AyerKeroh.find().sort({ time: -1 });
@@ -143,5 +170,7 @@ module.exports = {
   getAllDurianTunggalData,
   returnAyerKerohData,
   returnDurianTunggalData,
-  returnAlertData
+  returnAlertData,
+  getLast24DurianTunggalData,
+  getLast24AyerKerohData
 };
