@@ -1,7 +1,7 @@
 // https://apexcharts.com/javascript-chart-demos/area-charts/negative/
 // humidity, temperature, wtaer level
 // Ensure that data2 is available as a global variable
-var data2 = JSON.stringify(data2);
+
 // Function to transform data2 into the format expected by ApexCharts
 function transformData(data2) {
   return {

@@ -17,8 +17,7 @@ var spark_humidity = {
         }
     },
     stroke: {
-        curve: 'straight',
-        width: 2
+        curve: 'straight'
     },
     fill: {
         opacity: 1,
