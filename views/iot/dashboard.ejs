@@ -134,9 +134,9 @@
             let datetime = `${newData.date} ${newData.time}`;
 
             // Add new data points with datetime labels
-            waterSeriesData.push({ x: datetime, y: newData.distance_cm });
-            tempSeriesData.push({ x: datetime, y: newData.tempC });
-            humiditySeriesData.push({ x: datetime, y: newData.humidity });
+            waterSeriesData.push({ x: new Date(datetime), y: newData.distance_cm });
+            tempSeriesData.push({ x: new Date(datetime), y: newData.tempC });
+            humiditySeriesData.push({ x: new Date(datetime), y: newData.humidity });
 
             // Determine if the new data falls into Light Rain or Heavy Rain
             if (newData.rain > 30) {
