@@ -1,5 +1,11 @@
 // npm run dev
 // npm run start
+
+//$env:MONGO_URL="mongodb+srv://codecinnpro:LWmU9e7EKGwQy1P6@cluster0.z8rexks.mongodb.net/idp_iot?retryWrites=true&w=majority&appName=Cluster0"
+//node app.js
+//npm install axios
+//npm install express-session
+
 require('dotenv').config();
 
 var createError = require('http-errors');
