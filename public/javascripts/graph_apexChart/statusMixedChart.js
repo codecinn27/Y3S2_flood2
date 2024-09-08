@@ -3,17 +3,13 @@
 
 var options = {
     series: [{
-    name: 'TEAM A',
+    name: 'Status',
     type: 'column',
     data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
   }, {
-    name: 'TEAM B',
+    name: 'Rain Output',
     type: 'area',
     data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
-  }, {
-    name: 'TEAM C',
-    type: 'line',
-    data: [30, 25, 36, 30, 45, 35, 64, 52, 59, 36, 39]
   }],
     chart: {
     height: 350,
@@ -23,6 +19,13 @@ var options = {
   stroke: {
     width: [0, 2, 5],
     curve: 'smooth'
+  },  
+  title: {
+    text: 'Rain output, Status (50: warning, 100: danger)',
+    align: 'left',
+    style: {
+      fontSize: '14px'
+    }
   },
   plotOptions: {
     bar: {

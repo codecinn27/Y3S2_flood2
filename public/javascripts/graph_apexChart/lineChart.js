@@ -45,10 +45,11 @@ var options = {
     curve: 'smooth'
   },
   title: {
-    text: 'Area with Negative Values',
+    text: 'Water Level, Temperature, Humidity',
     align: 'left',
     style: {
-      fontSize: '14px'
+      fontSize: '14px',
+      
     }
   },
   xaxis: {
@@ -63,6 +64,7 @@ var options = {
   yaxis: {
     tickAmount: 4,
     floating: false,
+    max: 100, // Set the maximum value for the y-axis
     labels: {
       style: {
         colors: '#8e8da4',

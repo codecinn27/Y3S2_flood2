@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
 
 <div class="m-8">
-  <% data.forEach(item => { 
+  <% data2.forEach(item => { 
       // Determine the alert type based on status
       let alertTypeClass = 'text-blue-800 border-blue-300 bg-blue-50 dark:text-blue-400 dark:border-blue-800';
       let alertHeading = 'Info Alert';
@@ -36,6 +36,9 @@
         <div>
           <h3 class="text-base font-medium">Rain Status: <%= item.status %></h3>
         </div>
+      </div>
+      <div>
+        <h3 class="text-base font-medium text-left">Location: <%= item.location %></h3>
       </div>
       <div class="text-sm text-right">
         <%= item.date %> <%= item.time %>
