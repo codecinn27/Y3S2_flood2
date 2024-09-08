@@ -39,7 +39,6 @@ router.get('/graph/:id', async (req, res, next) => {
     const locationName = sessionController.getLocationName(id);
 
     if (locationName === "Invalid location ID") {
-      // Return a JSON response with an error message and a 400 status code
       return res.status(400).json({ error: 'Invalid location ID !!!' });
     }
 

@@ -1,27 +1,59 @@
 //https://apexcharts.com/javascript-chart-demos/mixed-charts/line-column-area/
 // rain output (area line) and status (bar)
+function convertToMalaysiaTime(utcDateString) {
+  let utcDate = new Date(utcDateString);
+  let malaysiaTime = new Date(utcDate.getTime() + (8 * 60 * 60 * 1000)); // Malaysia is UTC+8
+  return malaysiaTime.toISOString().slice(0, 19).replace('T', ' ');
+}
+
+function transformData(data2) {
+  return {
+    series: [
+      {
+        name: 'Status',
+        type: 'column',
+        data: data2.map(item => ({
+          x: convertToMalaysiaTime(item.mongoDBtime),
+          // x: item.date + ' ' + item.time,
+          y: item.status === 'Safe' ? 0 : item.status === 'Warning' ? 50 : item.status === 'Danger' ? 100 : null
+        }))
+      },
+      {
+        name: 'Rain Output',
+        type: 'area',
+        data: data2.map(item => ({
+          x: convertToMalaysiaTime(item.mongoDBtime),
+          // x: item.date + ' ' + item.time,
+          y: item.rain
+        }))
+      }
+    ]
+  }  
+};
+
+const transformedData = transformData(data2);
+const last20Data = transformedData.series[0].data.slice(20);
+const minTime = new Date(last20Data[0].x).getTime();
+const maxTime = new Date(last20Data[last20Data.length - 1].x).getTime();
 
 var options = {
-    series: [{
-    name: 'Status',
-    type: 'column',
-    data: [23, 11, 22, 27, 13, 22, 37, 21, 44, 22, 30]
-  }, {
-    name: 'Rain Output',
-    type: 'area',
-    data: [44, 55, 41, 67, 22, 43, 21, 41, 56, 27, 43]
-  }],
-    chart: {
+  series: transformedData.series,
+  chart: {
     height: 350,
     type: 'line',
     stacked: false,
+    zoom: {
+      type: 'x',
+      enabled: true,
+      autoScaleYaxis: true
+    }
   },
   stroke: {
-    width: [0, 2, 5],
+    width: [0, 2],
     curve: 'smooth'
-  },  
+  },
   title: {
-    text: 'Rain output, Status (50: warning, 100: danger)',
+    text: 'Rain output, Status (0: Safe, 50: warning, 100: danger)',
     align: 'left',
     style: {
       fontSize: '14px'
@@ -32,9 +64,9 @@ var options = {
       columnWidth: '50%'
     }
   },
-  
+
   fill: {
-    opacity: [0.85, 0.25, 1],
+    opacity: [0.85, 0.25],
     gradient: {
       inverseColors: false,
       shade: 'light',
@@ -44,34 +76,49 @@ var options = {
       stops: [0, 100, 100, 100]
     }
   },
-  labels: ['01/01/2003', '02/01/2003', '03/01/2003', '04/01/2003', '05/01/2003', '06/01/2003', '07/01/2003',
-    '08/01/2003', '09/01/2003', '10/01/2003', '11/01/2003'
-  ],
+
   markers: {
     size: 0
   },
   xaxis: {
-    type: 'datetime'
+    type: 'datetime',
+    min: minTime,
+    max: maxTime,
+    tickAmount: 20 // Adjust this to control the number of ticks on the x-axis
   },
-  yaxis: {
-    title: {
-      text: 'Points',
+  yaxis:[
+    {
+      title: {
+        text: 'Status',
+        min: 0,
+        max: 100,
+        
+      }
+    },
+    {
+      opposite: true,
+      title: {
+        text: 'Rain Output',
+      }
     }
-  },
+  ],
   tooltip: {
     shared: true,
     intersect: false,
+    x: {
+      format: "yyyy-MM-dd HH:mm",
+    },
     y: {
       formatter: function (y) {
         if (typeof y !== "undefined") {
           return y.toFixed(0) + " points";
         }
         return y;
-  
+
       }
     }
   }
-  };
+};
 
-  var chart = new ApexCharts(document.querySelector("#statusChart"), options);
-  chart.render();
+var chart = new ApexCharts(document.querySelector("#statusChart"), options);
+chart.render();

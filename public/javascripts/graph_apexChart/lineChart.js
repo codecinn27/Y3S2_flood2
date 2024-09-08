@@ -3,27 +3,30 @@
 // Ensure that data2 is available as a global variable
 
 // Function to transform data2 into the format expected by ApexCharts
-function transformData(data2) {
+function transformData2(data2) {
   return {
     series: [
       {
         name: 'Water Level (cm)',
         data: data2.map(item => ({
-          x: item.date + ' ' + item.time,
+          x: convertToMalaysiaTime(item.mongoDBtime),
+          // x: item.date + ' ' + item.time,
           y: item.distance
         }))
       },
       {
         name: 'Temperature (°C)',
         data: data2.map(item => ({
-          x: item.date + ' ' + item.time,
+          x: convertToMalaysiaTime(item.mongoDBtime),
+          // x: item.date + ' ' + item.time,
           y: item.tempC
         }))
       },
       {
         name: 'Humidity (%)',
         data: data2.map(item => ({
-          x: item.date + ' ' + item.time,
+          x: convertToMalaysiaTime(item.mongoDBtime),
+          // x: item.date + ' ' + item.time,
           y: item.humidity
         }))
       }
@@ -31,8 +34,13 @@ function transformData(data2) {
   };
 }
 
+const transformedData2 = transformData2(data2);
+const last20Data2 = transformedData2.series[0].data.slice(-20);
+const minTime2 = last20Data[0].x;
+const maxTime2 = last20Data[last20Data.length - 1].x;
+
 var options = {
-  series: transformData(data2).series,
+  series: transformedData2.series,
   chart: {
     type: 'area',
     height: 350
@@ -59,12 +67,15 @@ var options = {
     },
     axisTicks: {
       show: false
-    }
+    },
+    min: minTime2,
+    max: maxTime2
   },
   yaxis: {
     tickAmount: 4,
     floating: false,
-    max: 100, // Set the maximum value for the y-axis
+    max: 90, // Set the maximum value for the y-axis,
+    min: -30,
     labels: {
       style: {
         colors: '#8e8da4',
