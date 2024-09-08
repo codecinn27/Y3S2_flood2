@@ -36,8 +36,8 @@ function transformData2(data2) {
 
 const transformedData2 = transformData2(data2);
 const last20Data2 = transformedData2.series[0].data.slice(-20);
-const minTime2 = last20Data[0].x;
-const maxTime2 = last20Data[last20Data.length - 1].x;
+const minTime2 = last20Data2[0].x;
+const maxTime2 = last20Data2[last20Data2.length - 1].x;
 
 var options = {
   series: transformedData2.series,

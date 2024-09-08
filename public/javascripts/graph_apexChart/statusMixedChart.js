@@ -3,7 +3,7 @@
 function convertToMalaysiaTime(utcDateString) {
   let utcDate = new Date(utcDateString);
   let malaysiaTime = new Date(utcDate.getTime() + (8 * 60 * 60 * 1000)); // Malaysia is UTC+8
-  return malaysiaTime.toISOString().slice(0, 19).replace('T', ' ');
+  return malaysiaTime.toISOString().replace('T', ' ').slice(0, 19);
 }
 
 function transformData(data2) {
@@ -32,9 +32,13 @@ function transformData(data2) {
 };
 
 const transformedData = transformData(data2);
-const last20Data = transformedData.series[0].data.slice(20);
-const minTime = new Date(last20Data[0].x).getTime();
-const maxTime = new Date(last20Data[last20Data.length - 1].x).getTime();
+// Get the current time in UTC
+const nowUTC = new Date();
+// Convert the current time to Malaysia Time (UTC+8)
+const nowMalaysia = new Date(nowUTC.getTime() + (8 * 60 * 60 * 1000));
+// Calculate the time three minutes ago in Malaysia Time
+const threeMinutesAgoMalaysia = new Date(nowMalaysia.getTime() - (3 * 60 * 1000));
+
 
 var options = {
   series: transformedData.series,
@@ -46,8 +50,9 @@ var options = {
       type: 'x',
       enabled: true,
       autoScaleYaxis: true
-    }
+    },
   },
+  
   stroke: {
     width: [0, 2],
     curve: 'smooth'
@@ -61,7 +66,7 @@ var options = {
   },
   plotOptions: {
     bar: {
-      columnWidth: '50%'
+      columnWidth: '100%'
     }
   },
 
@@ -73,7 +78,7 @@ var options = {
       type: "vertical",
       opacityFrom: 0.85,
       opacityTo: 0.55,
-      stops: [0, 100, 100, 100]
+      stops: [0, 100]
     }
   },
 
@@ -82,9 +87,10 @@ var options = {
   },
   xaxis: {
     type: 'datetime',
-    min: minTime,
-    max: maxTime,
-    tickAmount: 20 // Adjust this to control the number of ticks on the x-axis
+    min: threeMinutesAgoMalaysia.getTime(),
+    max: nowMalaysia.getTime(),
+    tickAmount: 20, // Adjust this to control the number of ticks on the x-axis
+    // reversed: true // Reverse the order of the data points
   },
   yaxis:[
     {
