@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Always On Top Header</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="bg-white text-gray-900 fade-out transition-opacity duration-300">
+    <!-- Header -->
+    <header id="header"
+        class="fixed top-0 left-0 w-full bg-gray-100 text-gray-900 shadow-lg z-50 transition-colors duration-300">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+
+            <!-- Left Side: Icons and Title -->
+            <div class="flex items-center space-x-4">
+                <!-- About Us Icon -->
+                <a href="#" class="icon w-10 h-10 flex justify-center items-center rounded-full duration-300">
+                    <i class="fa-regular fa-user"></i>
+                </a>
+                <!-- Project Logo Icon (Non-Clickable) -->
+                <div class="logo w-10 h-10 flex justify-center items-center rounded-full">
+                    Project Icon
+                </div>
+                <div style="font-weight:bold">Our Project Name here</div>
+            </div>
+
+            <!-- Right Side: Dropdown and Switch -->
+            <div class="flex items-center space-x-4">
+                <!-- Dropdown Menu -->
+                <div class="relative">
+                    <button id="dropdownButton"
+                        class="dropdown-button text-gray-900 px-4 py-2 rounded-md focus:outline-none transition-colors duration-300">
+                        Menu
+                    </button>
+                    <div id="dropdownMenu" class="dropdown-menu absolute right-0 mt-2 w-48 shadow-lg rounded-md hidden">
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-200 transition-colors duration-300">Option
+                            1</a>
+                        <a href="#" class="block px-4 py-2 hover:bg-gray-200 transition-colors duration-300">Option
+                            2</a>
+                    </div>
+                </div>
+
+                <!-- Light/Dark Theme Switch -->
+                <label class="flex items-center cursor-pointer">
+                    <input type="checkbox" id="themeToggle" class="hidden">
+                    <div
+                        class="switch-background w-12 h-6 rounded-full flex items-center p-1 transition-colors duration-300">
+                        <div id="toggleDot"
+                            class="switch-dot w-4 h-4 rounded-full shadow-md transform transition-transform duration-300">
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+    </header>
+
+    <!-- Footer -->
+    <footer class="fixed bottom-4 left-0 right-0 flex justify-center opacity-100 transition-opacity duration-300">
+        <div>
+            <!-- Back to Top Button -->
+            <button id="backToTop"
+                class="fixed bottom-20 right-4 p-3 w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-lg transition-colors duration-300 flex items-center justify-center">
+                <i class="fa-solid fa-arrow-up"></i>
+            </button>
+        </div>
+        <div class="w-full rounded-full mx-4 py-2 shadow-lg flex justify-around relative overflow-hidden">
+            <div id="footerHighlight"
+                class="absolute inset-y-0 left-0 bg-gray-300 dark:bg-gray-700 w-1/4 transition-all duration-300"></div>
+            <a href="#" id="section1" class="footer-section text-center w-1/4 z-10 relative transition-colors duration-300"
+                data-section="index">Dashboard</a>
+            <a href="#" id="section2" class="footer-section text-center w-1/4 z-10 relative transition-colors duration-300"
+                data-section="section2">History</a>
+            <a href="#" id="section3" class="footer-section text-center w-1/4 z-10 relative transition-colors duration-300"
+                data-section="section3">Notification</a>
+            <a href="#" id="section3" class="footer-section text-center w-1/4 z-10 relative" 
+                data-section="section4">About Us</a>
+        </div>
+    </footer>
+
+    <!-- Content -->
+    <div class="pt-20">
+        <h1 class="text-center text-2xl">Welcome to Our Page</h1>
+        <p class="text-center mt-4">This is a demo of an always-on-top header with Tailwind CSS.</p>
+        <div class="text-center" ; style="font-size:150px">About Us</div><br>
+        <div class="text-center" ; style="font-size:50px">hi</div><br>
+        <div class="text-center" ; style="font-size:50px">hi</div><br>
+        <div class="text-center" ; style="font-size:50px">hi</div><br>
+        <div class="text-center" ; style="font-size:50px">hi</div><br>
+        <div class="text-center" ; style="font-size:50px">hi</div><br>
+        <div class="text-center" ; style="font-size:50px">hi</div>
+        <div class="text-center" ; style="font-size:50px">hi</div>
+        <div class="text-center" ; style="font-size:50px">hi</div>
+        <div class="text-center" ; style="font-size:50px">hi</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
