@@ -35,15 +35,25 @@ function transformData2(data2) {
 }
 
 const transformedData2 = transformData2(data2);
-const last20Data2 = transformedData2.series[0].data.slice(-20);
-const minTime2 = last20Data2[0].x;
-const maxTime2 = last20Data2[last20Data2.length - 1].x;
+// const last20Data2 = transformedData2.series[0].data.slice(-20);
+// const minTime2 = last20Data2[0].x;
+// const maxTime2 = last20Data2[last20Data2.length - 1].x;
 
 var options = {
   series: transformedData2.series,
   chart: {
     type: 'area',
-    height: 350
+    height: 350,
+    toolbar: {
+      autoSelected: 'zoom',
+      tools: {
+        zoom: true,
+        zoomin: true,
+        zoomout: true,
+        pan: true,
+        reset: true
+      }
+    }
   },
   colors: ['#478CCF', '#FF4C4C', '#77E4C8'], // Added colors here
   dataLabels: {
@@ -53,7 +63,6 @@ var options = {
     curve: 'smooth'
   },
   title: {
-    text: 'Water Level, Temperature, Humidity',
     align: 'left',
     style: {
       fontSize: '14px',
@@ -68,8 +77,8 @@ var options = {
     axisTicks: {
       show: false
     },
-    min: minTime2,
-    max: maxTime2
+    // min: minTime2,
+    // max: maxTime2
   },
   yaxis: {
     tickAmount: 4,

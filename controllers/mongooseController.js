@@ -131,6 +131,28 @@ const returnDurianTunggalData = async () => {
   }
 }
 
+const returnAyerKeroh24Data = async () => {
+  try {
+    const data = await AyerKeroh.find().sort({ time: -1 }).limit(24);
+    //console.log("data: " , data);
+    return data;
+  } catch (err) {
+    console.error('Error fetching Ayer Keroh data from MongoDB:', err);
+    throw new Error('An error occurred while fetching Ayer Keroh data');
+  }
+}
+
+const returnDurianTunggal24Data = async () => {
+  try {
+    const data = (await DurianTunggal.find().sort({ time: -1 })).limit(24);
+    //console.log("Data fetched from MongoDB:", data);
+    return data;
+  } catch (err) {
+    console.error('Error fetching Durian Tunggal data from MongoDB:', err);
+    throw new Error('An error occurred while fetching Durian Tunggal data');
+  }
+}
+
 const returnAlertData = async () => {
   try {
     let ayerKerohAlerts = await AyerKeroh.find({ status: { $in: ['Danger', 'Warning'] } });
@@ -170,6 +192,8 @@ module.exports = {
   getAllDurianTunggalData,
   returnAyerKerohData,
   returnDurianTunggalData,
+  returnAyerKeroh24Data,
+  returnDurianTunggal24Data,
   returnAlertData,
   getLast24DurianTunggalData,
   getLast24AyerKerohData

@@ -10,7 +10,7 @@ function transformData(data2) {
   return {
     series: [
       {
-        name: 'Status',
+        name: 'Status (Safe: 0, Warning: 50, Danger: 100)',
         type: 'column',
         data: data2.map(item => ({
           x: convertToMalaysiaTime(item.mongoDBtime),
@@ -32,12 +32,15 @@ function transformData(data2) {
 };
 
 const transformedData = transformData(data2);
+const last20Data = transformedData.series[0].data.slice(-20);
+const minTime = last20Data[0].x;
+const maxTime = last20Data[last20Data.length - 1].x;
 // Get the current time in UTC
-const nowUTC = new Date();
-// Convert the current time to Malaysia Time (UTC+8)
-const nowMalaysia = new Date(nowUTC.getTime() + (8 * 60 * 60 * 1000));
-// Calculate the time three minutes ago in Malaysia Time
-const threeMinutesAgoMalaysia = new Date(nowMalaysia.getTime() - (3 * 60 * 1000));
+// const nowUTC = new Date();
+// // Convert the current time to Malaysia Time (UTC+8)
+// const nowMalaysia = new Date(nowUTC.getTime() + (8 * 60 * 60 * 1000));
+// // Calculate the time three minutes ago in Malaysia Time
+// const threeMinutesAgoMalaysia = new Date(nowMalaysia.getTime() - (3 * 60 * 1000));
 
 
 var options = {
@@ -51,18 +54,21 @@ var options = {
       enabled: true,
       autoScaleYaxis: true
     },
+    toolbar: {
+      autoSelected: 'zoom',
+      tools: {
+        zoom: true,
+        zoomin: true,
+        zoomout: true,
+        pan: true,
+        reset: true
+      }
+    }
   },
   
   stroke: {
     width: [0, 2],
     curve: 'smooth'
-  },
-  title: {
-    text: 'Rain output, Status (0: Safe, 50: warning, 100: danger)',
-    align: 'left',
-    style: {
-      fontSize: '14px'
-    }
   },
   plotOptions: {
     bar: {
@@ -87,8 +93,8 @@ var options = {
   },
   xaxis: {
     type: 'datetime',
-    min: threeMinutesAgoMalaysia.getTime(),
-    max: nowMalaysia.getTime(),
+    // min: threeMinutesAgoMalaysia.getTime(),
+    // max: nowMalaysia.getTime(),
     tickAmount: 20, // Adjust this to control the number of ticks on the x-axis
     // reversed: true // Reverse the order of the data points
   },

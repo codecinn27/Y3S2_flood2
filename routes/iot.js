@@ -47,6 +47,33 @@ router.get('/graph/:id', async (req, res, next) => {
 
     let data2;
     if (id === "ayerkeroh") {
+      data2 = await mongooseController.returnAyerKeroh24Data();
+    } else if (id === "duriantunggal") {
+      data2 = await mongooseController.returnDurianTunggal24Data();
+    }
+
+    res.render('iot/graph', { data: { id, locationName }, data2 });
+  } catch (error) {
+    console.error('Error fetching data from Graph page:', error);
+    res.status(500).json({ error: 'Failed to fetch data from Graph controller errors' });
+  }
+
+});
+
+router.get('/graph/:id/all', async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    const locationName = sessionController.getLocationName(id);
+
+    if (locationName === "Invalid location ID") {
+      return res.status(400).json({ error: 'Invalid location ID !!!' });
+    }
+
+    req.session.userId = id;
+    req.session.locationName = locationName;
+
+    let data2;
+    if (id === "ayerkeroh") {
       data2 = await mongooseController.returnAyerKerohData();
     } else if (id === "duriantunggal") {
       data2 = await mongooseController.returnDurianTunggalData();
