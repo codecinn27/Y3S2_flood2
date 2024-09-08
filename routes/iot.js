@@ -5,7 +5,9 @@ var path = require('path');
 var mongooseController = require('../controllers/mongooseController');
 const sessionController = require('../controllers/session');
 
-//Specific Routes with Parameters First:
+const axios = require('axios');
+const https = require('https');
+
 router.get('/history/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
@@ -18,12 +20,16 @@ router.get('/history/:id', async (req, res, next) => {
     req.session.userId = id;
     req.session.locationName = locationName;
 
-    let data2;
+    let data2, apiUrl;
     if (id === "ayerkeroh") {
-      data2 = await mongooseController.returnAyerKerohData();
+      apiUrl = 'https://floodzte5g.azurewebsites.net/ayerkeroh/data';
     } else if (id === "duriantunggal") {
-      data2 = await mongooseController.returnDurianTunggalData();
+      apiUrl = 'https://floodzte5g.azurewebsites.net/duriantunggal/data';
     }
+
+    // Fetch data from the respective API URL
+    const response = await fetch(apiUrl);
+    data2 = await response.json();
 
     res.render('iot/history', { data: { id, locationName }, data2 });
 
@@ -32,7 +38,6 @@ router.get('/history/:id', async (req, res, next) => {
     res.status(500).json({ error: 'Failed to fetch data from history controller' });
   }
 });
-
 
 
 router.get('/graph/:id', async (req, res, next) => {
@@ -68,21 +73,41 @@ router.get('/ayerkeroh/latest', mongooseController.getLast10AyerKerohData);
 router.get('/ayerkeroh/data', mongooseController.getAllAyerKerohData);
 router.get('/duriantunggal/data', mongooseController.getAllDurianTunggalData);
 
-router.get('/alert', async (req, res, next) => {
-  try {
-    sessionController.setDefaultSessionValues(req);
+router.get('/alert/:id', function(req, res, next) {
+  const { id } = req.params;
 
-    // Fetching data asynchronously from the saveData function
-    const data = await sessionController.saveData(req.session.userId, req.session.locationName);
-    const data2 = await mongooseController.returnAlertData();
-    // Rendering the 'iot/alert' view with the combined data
-    res.render('iot/alert', { data, data2});
-  } catch (error) {
-    console.log("fail");
+  // Define URLs based on the location ID
+  const url = id === "ayerkeroh"
+    ? 'https://floodzte5g.azurewebsites.net/ayerkeroh/data'
+    : id === "duriantunggal"
+    ? 'https://floodzte5g.azurewebsites.net/duriantunggal/data'
+    : null;
 
-    next(error); // Pass the error to the error handler middleware
+  if (!url) {
+    return res.status(400).json({ error: 'Invalid location ID' });
   }
-});
+
+  // Fetch data from the selected URL
+  https.get(url, (response) => {
+    let data = '';
+
+    response.on('data', (chunk) => {
+      data += chunk;
+    });
+
+    response.on('end', () => {
+      try {
+        const jsonData = JSON.parse(data);
+        res.render('iot/alert', { data: jsonData, id });
+      } catch (e) {
+        next(e); // Handle JSON parse errors
+      }
+    });
+
+  }).on('error', (err) => {
+    next(err); // Handle request errors
+  });
+});  
 
 router.get('/', async (req, res, next) => {
   try {
