@@ -1,3 +1,6 @@
+<div id="loadingScreen" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 hidden">
+    <div class="loader"></div> <!-- You can style this loader or replace it with an animation -->
+</div>
 <header id="header"
 class="fixed top-0 left-0 w-full bg-gray-100 text-gray-900 shadow-lg z-50 transition-colors duration-300 mb-4">
 <div class="container mx-auto px-4 py-2 flex justify-between items-center">
@@ -6,13 +9,9 @@ class="fixed top-0 left-0 w-full bg-gray-100 text-gray-900 shadow-lg z-50 transi
     <div class="flex items-center space-x-4">
         <!-- About Us Icon -->
         <a href="/" class="icon w-10 h-10 flex justify-center items-center rounded-full duration-300">
-            <i class="fa-regular fa-user"></i>
+            <img src="https://res.cloudinary.com/du43x2mnv/image/upload/v1724209712/flood_logo_jls8hq.png" alt="FloodEye Logo">
         </a>
-        <!-- Project Logo Icon (Non-Clickable) -->
-        <div class="logo w-10 h-10 flex justify-center items-center rounded-full duration-300">
-            Project Icon
-        </div>
-        <div style="font-weight:bold">Our Project Name here</div>
+        <div style="font-weight:bold">FloodEye 2.0</div>
     </div>
 
     <!-- Right Side: Dropdown and Switch -->
@@ -33,7 +32,7 @@ class="fixed top-0 left-0 w-full bg-gray-100 text-gray-900 shadow-lg z-50 transi
         <label class="flex items-center cursor-pointer">
             <input type="checkbox" id="themeToggle" class="hidden">
             <div
-                class="switch-background w-10 h-6 rounded-full flex items-center p-1 transition-colors duration-300">
+                class="switch-background w-12 h-6 rounded-full flex items-center p-1 transition-colors duration-300">
                 <div id="toggleDot"
                     class="switch-dot w-4 h-4 rounded-full shadow-md transform transition-transform duration-300">
                 </div>

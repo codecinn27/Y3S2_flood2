@@ -102,3 +102,43 @@ body.dark footer {
 body.dark #footerHighlight {
     background-color: #333; /* Dark theme highlight color */
 }
+
+
+#backToTop {
+    opacity: 0.7; /* Slight transparency */
+}
+
+#backToTop:hover {
+    opacity: 1; /* Fully opaque on hover */
+}
+
+body.dark #backToTop {
+    background-color: #f7fafc; /* Dark theme background */
+    color: #333; /* Light text */
+}
+
+/* Add transitions for fade-in and fade-out */
+.fade-in {
+    opacity: 1;
+    transition: opacity 0.2s ease-in;
+}
+
+.fade-out {
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+}
+
+body, footer {
+    opacity: 0;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Style for disabled footer section */
+.footer-section.disabled {
+    pointer-events: none; /* Disable clicking */
+    opacity: 0.5; /* Dim the appearance */
+    cursor: not-allowed; /* Change cursor to indicate it's disabled */
+}

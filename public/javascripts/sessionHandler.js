@@ -16,7 +16,11 @@ document.addEventListener('DOMContentLoaded', function () {
     }else if(basePath === 'graph'){
         ayerKerohLink.href = `/graph/ayerkeroh`;
         durianTunggalLink.href = `/graph/duriantunggal`;       
-    } else {
+    } else if(basePath === 'graph/all'){
+        ayerKerohLink.href = `/graph/all/ayerkeroh`;
+        durianTunggalLink.href = `/graph/all/duriantunggal`;       
+    }
+    else {
         ayerKerohLink.href = `/ayerkeroh`;
         durianTunggalLink.href = `/duriantunggal`;
     }

@@ -49,7 +49,7 @@ router.get('/graph/:id', async (req, res, next) => {
     if (id === "ayerkeroh") {
       data2 = await mongooseController.returnAyerKeroh24Data();
     } else if (id === "duriantunggal") {
-      data2 = await mongooseController.returnDurianTunggal24Data();
+      data2 = await mongooseController.returnDurianTunggal24Data();      
     }
 
     res.render('iot/graph', { data: { id, locationName }, data2 });
@@ -60,7 +60,7 @@ router.get('/graph/:id', async (req, res, next) => {
 
 });
 
-router.get('/graph/:id/all', async (req, res, next) => {
+router.get('/graph/all/:id', async (req, res, next) => {
   try {
     const { id } = req.params;
     const locationName = sessionController.getLocationName(id);

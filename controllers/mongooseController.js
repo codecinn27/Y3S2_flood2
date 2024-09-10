@@ -144,7 +144,7 @@ const returnAyerKeroh24Data = async () => {
 
 const returnDurianTunggal24Data = async () => {
   try {
-    const data = (await DurianTunggal.find().sort({ time: -1 })).limit(24);
+    const data = await DurianTunggal.find().sort({ time: -1 }).limit(24);
     //console.log("Data fetched from MongoDB:", data);
     return data;
   } catch (err) {

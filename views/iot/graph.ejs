@@ -1,13 +1,13 @@
 <% layout('layouts/boilerplate') %>
 <!-- <h1>Graph</h1> -->
 <!-- <h2><%= data.locationName %></h2> -->
-<div class="flex flex-row flex-wrap w-full p-4 justify-center items-center">
+<div class="flex flex-row flex-wrap w-full p-2 justify-center items-center">
     <a href="/graph/<%= data.id %>"
         class="flex items-center justify-center sm:w-auto px-4 py-4 text-sm font-bold bg-green-300 leading-6 capitalize duration-100 transform border-2 rounded-sm shadow cursor-pointer focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 focus:outline-none sm:mb-0 sm:px-6 hover:shadow-lg hover:-translate-y-1">
         24 Data
     </a>
 
-    <a href="/graph/<%= data.id %>/all"
+    <a href="/graph/all/<%= data.id %>"
         class="flex items-center justify-center sm:w-auto px-4 py-4 text-sm font-bold leading-6 capitalize duration-100 transform border-2 rounded-sm cursor-pointer border-green-300 focus:ring-4 focus:ring-green-500 focus:ring-opacity-50 focus:outline-none sm:px-6 hover:shadow-lg hover:-translate-y-1">
         All Data
     </a>
