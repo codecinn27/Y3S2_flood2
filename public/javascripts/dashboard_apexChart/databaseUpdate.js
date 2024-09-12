@@ -65,5 +65,12 @@ function populateCharts(data2) {
     });
 }
 
+function lastStatus(data2){
+    const lastData = data2[data2.length - 1]; // Get the last data entry
+    document.getElementById('status').innerText = `Status: ${lastData.status}`;
+}
+
+
 // Call the function to populate the charts with data2 on page load
 populateCharts(data2);
+lastStatus(data2);

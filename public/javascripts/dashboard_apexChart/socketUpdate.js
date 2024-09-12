@@ -87,6 +87,11 @@ function updateCharts(newData) {
     });
 }
 
+function updateStatus(newData) {
+    // Update the status in the DOM
+    document.getElementById('status').innerText = `Status: ${newData.status}`;
+}
+
 socket.on('mqtt-message', (data) => {
     const messageData = JSON.parse(data.message);
 
@@ -94,4 +99,5 @@ socket.on('mqtt-message', (data) => {
     // { distance_cm: 29.22, tempC: 28.5, humidity: 65.2, date: '2024-09-03', time: '00:04:11' }
 
     updateCharts(messageData);
+    updateStatus(messageData);
 });

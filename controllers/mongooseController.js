@@ -66,7 +66,7 @@ const getLast24DurianTunggalData = async(req, res) => {
   try {
     const data = await DurianTunggal.find().sort({ time: -1 })
           .limit(24)      
-          .select('-_id tempC humidity rain distance date time mongoDBtime'); 
+          .select('-_id tempC humidity rain distance date time mongoDBtime status'); 
           // Exclude _id, createdAt, and updatedAt fields;
     return data;
   } catch (err) {
@@ -79,7 +79,7 @@ const getLast24AyerKerohData = async(req, res) => {
   try {
     const data = await AyerKeroh.find().sort({ time: -1 })
             .limit(24)
-            .select('-_id tempC humidity rain distance date time mongoDBtime'); 
+            .select('-_id tempC humidity rain distance date time mongoDBtime status'); 
             // Exclude _id, createdAt, and updatedAt fields
 
     return data;
@@ -193,7 +193,7 @@ module.exports = {
   returnAyerKerohData,
   returnDurianTunggalData,
   returnAyerKeroh24Data,
-  returnDurianTunggal24Data,
+  returnDurianTunggal24Data, 
   returnAlertData,
   getLast24DurianTunggalData,
   getLast24AyerKerohData
