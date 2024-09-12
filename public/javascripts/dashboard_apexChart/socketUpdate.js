@@ -92,12 +92,14 @@ function updateStatus(newData) {
     document.getElementById('status').innerText = `Status: ${newData.status}`;
 }
 
-socket.on('mqtt-message', (data) => {
-    const messageData = JSON.parse(data.message);
+socket.on('mqtt-message', (data3) => {
+    if(data3.topic === `zteFlood/flood/melaka/${data.id}`){
+        const messageData = JSON.parse(data3.message);
 
-    // Example format of messageData:
-    // { distance_cm: 29.22, tempC: 28.5, humidity: 65.2, date: '2024-09-03', time: '00:04:11' }
-
-    updateCharts(messageData);
-    updateStatus(messageData);
+        // Example format of messageData:
+        // { distance_cm: 29.22, tempC: 28.5, humidity: 65.2, date: '2024-09-03', time: '00:04:11' }
+    
+        updateCharts(messageData);
+        updateStatus(messageData);
+    }
 });

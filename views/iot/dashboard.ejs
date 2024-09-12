@@ -39,7 +39,9 @@
     <script src="/javascripts/dashboard_apexChart/rainBarChart.js"></script>
     <!-- must pass the data like cannot put the data in the script -->
     <script>
+        var data = <%- JSON.stringify(data) %>;
         var data2 = <%- JSON.stringify(data2) %>
+       
     </script>
     <script src="/javascripts/dashboard_apexChart/databaseUpdate.js"></script>
     <script src="/javascripts/dashboard_apexChart/socketUpdate.js"></script>
