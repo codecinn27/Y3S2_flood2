@@ -9,14 +9,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
     <link rel="stylesheet" href="/stylesheets/style.css">
-    
+    <link rel="stylesheet" href="/stylesheets/SluiceButton.css">
     <title>Zte5G Flood</title>
 </head>
 <body class="bg-white text-gray-900 fade-out transition-opacity duration-300">
     <%- include('../partials/header') %>
+    <%- include('../partials/headerStatus') %>
     <%- body %>
     <%- include('../partials/footer') %>
+
+    <script>
+        var data = <%- JSON.stringify(data) %>;
+        var dataStatus = <%- JSON.stringify(dataStatus) %>;
+      </script>
     <script src="/javascripts/frontend.js"></script>
     <script src="/javascripts/sessionHandler.js"></script>
+    <script src="/javascripts/dataStatus.js"></script>
+    <script src="/javascripts/dashboard_apexChart/socketUpdateStatus.js"></script>
 </body>
 </html>

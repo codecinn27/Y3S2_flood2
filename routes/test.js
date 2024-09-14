@@ -34,4 +34,20 @@ router.get('/graph3', function (req, res, next) {
 router.get('/graph4', function (req, res, next) {
   res.render('test/graph4');
 })
+
+router.get('/button', function(req,res,next){
+  res.render('test/button');
+})
+
+router.get('/button2', function(req,res,next){
+  res.render('test/button2');
+})
+
+router.get('/button3', function(req,res,next){
+  res.render('test/button3');
+})
+
+router.get('/button4', function(req,res,next){
+  res.render('test/button4');
+})
 module.exports = router;

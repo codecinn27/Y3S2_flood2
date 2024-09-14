@@ -174,12 +174,34 @@ const returnAlertData = async () => {
 
     // Sort the alerts by dateTime, with the latest first
     alertStatuses.sort((a, b) => b.dateTime - a.dateTime);
-    console.log(alertStatuses);
+    // console.log(alertStatuses);
     
     return alertStatuses;
   } catch (err) {
     console.error('Error fetching Durian Tunggal data from MongoDB:', err);
     throw new Error('An error occurred while fetching Durian Tunggal data');
+  }
+}
+
+const returnLatestAyerKerohDataStatus = async () => {
+  try {
+    const latestData = await AyerKeroh.findOne().sort({ time: -1 }).select('-_id status'); 
+    console.log("latestData Mongo controller: ", latestData);
+    return latestData;
+  } catch (err) {
+    console.error('Error fetching the latest Ayer Keroh data from MongoDB:', err);
+    throw new Error('An error occurred while fetching the latest Ayer Keroh data');
+  }
+}
+
+const returnLatestDurianTunggalDataStatus = async () => {
+  try {
+    const latestData = await DurianTunggal.findOne().sort({ time: -1 }).select('-_id status'); 
+    console.log("latestData Mongo controller: ", latestData);
+    return latestData;
+  } catch (err) {
+    console.error('Error fetching the latest Ayer Keroh data from MongoDB:', err);
+    throw new Error('An error occurred while fetching the latest Ayer Keroh data');
   }
 }
 
@@ -196,5 +218,7 @@ module.exports = {
   returnDurianTunggal24Data, 
   returnAlertData,
   getLast24DurianTunggalData,
-  getLast24AyerKerohData
+  getLast24AyerKerohData,
+  returnLatestAyerKerohDataStatus,
+  returnLatestDurianTunggalDataStatus
 };

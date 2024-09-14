@@ -18,13 +18,17 @@ router.get('/history/:id', async (req, res, next) => {
     req.session.locationName = locationName;
 
     let data2;
+    let dataStatus;
     if (id === "ayerkeroh") {
       data2 = await mongooseController.returnAyerKerohData();
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+      
     } else if (id === "duriantunggal") {
       data2 = await mongooseController.returnDurianTunggalData();
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
     }
 
-    res.render('iot/history', { data: { id, locationName }, data2 });
+    res.render('iot/history', { data: { id, locationName }, data2, dataStatus });
 
   } catch (error) {
     console.error('Error fetching data for history page:', error);
@@ -46,13 +50,16 @@ router.get('/graph/:id', async (req, res, next) => {
     req.session.locationName = locationName;
 
     let data2;
+    let dataStatus;
     if (id === "ayerkeroh") {
       data2 = await mongooseController.returnAyerKeroh24Data();
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
     } else if (id === "duriantunggal") {
-      data2 = await mongooseController.returnDurianTunggal24Data();      
+      data2 = await mongooseController.returnDurianTunggal24Data();    
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();  
     }
 
-    res.render('iot/graph', { data: { id, locationName }, data2 });
+    res.render('iot/graph', { data: { id, locationName }, data2, dataStatus });
   } catch (error) {
     console.error('Error fetching data from Graph page:', error);
     res.status(500).json({ error: 'Failed to fetch data from Graph controller errors' });
@@ -73,13 +80,16 @@ router.get('/graph/all/:id', async (req, res, next) => {
     req.session.locationName = locationName;
 
     let data2;
+    let dataStatus;
     if (id === "ayerkeroh") {
       data2 = await mongooseController.returnAyerKerohData();
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
     } else if (id === "duriantunggal") {
       data2 = await mongooseController.returnDurianTunggalData();
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
     }
 
-    res.render('iot/graph', { data: { id, locationName }, data2 });
+    res.render('iot/graph', { data: { id, locationName }, data2, dataStatus });
   } catch (error) {
     console.error('Error fetching data from Graph page:', error);
     res.status(500).json({ error: 'Failed to fetch data from Graph controller errors' });
@@ -100,7 +110,15 @@ router.get('/alert', async (req, res, next) => {
     const data = await sessionController.saveData(req.session.userId, req.session.locationName);
     const data2 = await mongooseController.returnAlertData();
     // Rendering the 'iot/alert' view with the combined data
-    res.render('iot/alert', { data, data2});
+    let dataStatus;
+    console.log("log: ",req.session.userId);
+    
+    if(req.session.userId === "ayerkeroh"){
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+    }else if(req.session.userId === "duriantunggal"){
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+    }
+    res.render('iot/alert', { data, data2, dataStatus });
   } catch (error) {
     console.log("fail");
 
@@ -135,12 +153,15 @@ router.get('/:id', async (req, res, next) => {
     req.session.locationName = locationName;
     
     let data2;
+    let dataStatus;
     if (id === "ayerkeroh") {
       data2 = await mongooseController.getLast24AyerKerohData();
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
     } else if (id === "duriantunggal") {
       data2 = await mongooseController.getLast24DurianTunggalData();
+      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
     }  
-    res.render('iot/dashboard', { data:{ id, locationName } , data2});
+    res.render('iot/dashboard', { data:{ id, locationName } , data2, dataStatus});
   } catch (error) {
     console.error('Error fetching data from Home page:', error);
     res.status(500).json({ error: 'Failed to fetch data from mainpage controller errors' });
