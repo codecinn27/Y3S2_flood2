@@ -7,7 +7,14 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.0/flowbite.min.js"></script>
     <title>About Us</title>
+    <style>
+        .carousel-text-container {
+            padding: 0 4.5rem; /* Add horizontal padding */
+            max-width: 100%; /* Ensure text container does not extend too far */
+        }
+    </style>
 
 </head>
 
@@ -307,6 +314,59 @@
           </div>
         </div>
       </section>
+
+    <section class="bg-cover bg-center bg-gradient-to-b from-slate-50 to-sky-400 h-screen">  
+        
+    <div class="bg-gray-50">
+        <div class="max-w-3xl mx-auto mt-12 mb-12">
+            <div id="default-carousel" class="relative" data-carousel="static">
+                <!-- Carousel wrapper -->
+                <div class="overflow-hidden relative h-56 rounded-lg sm:h-64 xl:h-80 2xl:h-96 flex items-center justify-center bg-gray-800">
+                    <!-- Item 1 -->
+                    <div class="hidden duration-700 ease-in-out flex items-center justify-center text-center text-white carousel-text-container" data-carousel-item>
+                        <div>
+                            <h2 class="text-3xl font-bold mb-2">Establish a Robust Monitoring Network</h2>
+                            <p class="text-lg">Develop a network that provides real-time data on water levels, precipitation, and other relevant parameters using the FavorIOT platform.</p>
+                        </div>
+                    </div>
+                    <!-- Item 2 -->
+                    <div class="hidden duration-700 ease-in-out flex items-center justify-center text-center text-white carousel-text-container" data-carousel-item>
+                        <div>
+                            <h2 class="text-3xl font-bold mb-2">Enhance Community Resilience</h2>
+                            <p class="text-lg">Deliver timely alerts and notifications to residents and authorities during flood events through Telegram notifications.</p>
+                        </div>
+                    </div>
+                    <!-- Item 3 -->
+                    <div class="hidden duration-700 ease-in-out flex items-center justify-center text-center text-white carousel-text-container" data-carousel-item>
+                        <div>
+                            <h2 class="text-3xl font-bold mb-2">Create User-Friendly Interfaces</h2>
+                            <p class="text-lg">Develop a website to visualize flood data, promoting community engagement and empowerment.</p>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slider indicators -->
+                <div class="flex absolute bottom-5 left-1/2 z-30 space-x-3 -translate-x-1/2">
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 2" data-carousel-slide-to="1"></button>
+                    <button type="button" class="w-3 h-3 rounded-full" aria-current="false" aria-label="Slide 3" data-carousel-slide-to="2"></button>
+                </div>
+                <!-- Slider controls -->
+                <button type="button" class="flex absolute top-0 left-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-prev>
+                    <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                        <span class="hidden">Previous</span>
+                    </span>
+                </button>
+                <button type="button" class="flex absolute top-0 right-0 z-30 justify-center items-center px-4 h-full cursor-pointer group focus:outline-none" data-carousel-next>
+                    <span class="inline-flex justify-center items-center w-8 h-8 rounded-full sm:w-10 sm:h-10 bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                        <svg class="w-5 h-5 text-white sm:w-6 sm:h-6 dark:text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                        <span class="hidden">Next</span>
+                    </span>
+                </button>
+            </div>
+            <script src="https://unpkg.com/flowbite@1.4.0/dist/flowbite.js"></script>
+        </div>
+    </section>
 
       <section class="bg-cover bg-center bg-gradient-to-b from-sky-400 to-slate-50 h-screen">
         <p class="text-4xl font-bold tracking-wider uppercase text-center text-transparent bg-clip-text bg-gradient-to-r from-violet-700 via-purple-500 to-slate-100">Demonstration Video</p>
