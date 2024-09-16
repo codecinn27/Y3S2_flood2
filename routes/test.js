@@ -50,4 +50,8 @@ router.get('/button3', function(req,res,next){
 router.get('/button4', function(req,res,next){
   res.render('test/button4');
 })
+
+router.get('/popup1', function(req,res,next){
+  res.render('test/popup1');
+})
 module.exports = router;

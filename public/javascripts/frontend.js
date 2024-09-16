@@ -69,7 +69,7 @@ footerSections.forEach((section, index) => {
         
         setTimeout(() => {
             window.location.href = `${sectionId}`;
-        }, 200); // Duration should match the CSS transition duration
+        }, 10); // Duration should match the CSS transition duration
     });
 });
 
@@ -95,6 +95,7 @@ function updateFooterHighlight(sectionId) {
     }, 50); // Short delay to ensure the highlight moves instantly
 }
 
+
 // Handle fade-in effect on page load
 document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
@@ -103,7 +104,7 @@ document.addEventListener('DOMContentLoaded', () => {
         body.classList.add('fade-in');
 
         // Update footer highlight AFTER fading in
-        const currentSection = window.location.pathname.split('/').pop().replace('.html', '');
+        const currentSection = window.location.pathname;
         updateFooterHighlight(currentSection);
     }, 100); // Delay to apply fade-in after page load
 });

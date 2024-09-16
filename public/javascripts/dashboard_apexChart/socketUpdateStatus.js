@@ -9,6 +9,13 @@ const socket = io();
 function updateStatus(newData) {
     const statusElement = document.getElementById('status');
     const buttonElement = statusElement.closest('div');
+    var button = document.getElementById('sluiceGateButton');
+
+    if (newData.status === "Danger" || newData.status === "Warning") {
+        button.classList.remove('hidden');
+    }else{
+        button.classList.add('hidden');
+    }
 
     // Update the status text
     statusElement.innerText = `Status: ${newData.status}`;
