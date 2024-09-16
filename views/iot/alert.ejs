@@ -2,7 +2,7 @@
 
 <div class="mt-16"></div>
 <div class="m-8">
-  <% data2.forEach(item => { 
+  <% data2.forEach((item, index) => { 
       // Determine the alert type based on status
       let alertTypeClass = 'text-blue-800 border-blue-300 bg-blue-50 dark:text-blue-400 dark:border-blue-800';
       let alertHeading = 'Info Alert';
@@ -17,7 +17,7 @@
       }
   %>
     <!-- Alert Box -->
-    <div class="max-w-2xl p-4 mb-4 mx-auto border rounded-lg <%= alertTypeClass %>" role="alert">
+    <div class="max-w-2xl p-4 mb-4 mx-auto border rounded-lg alert-item <%= alertTypeClass %>" role="alert">
       <div class="flex items-center mb-3">
         <svg class="flex-shrink-0 w-5 h-5 mr-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
           <path d="<%= iconPath %>"/>
@@ -26,7 +26,7 @@
       </div>
       <div class="grid grid-cols-2 gap-4 text-sm mb-4">
         <div>
-          <h3 class="text-base font-medium">Temperature: <%= item.tempC %>°C</h3>
+          <h3 class="text-base font-medium">Temperature: <%= item.tempC.toFixed(1) %>°C</h3>
         </div>
         <div>
           <h3 class="text-base font-medium">Water Level: <%= item.distance %> cm</h3>
@@ -38,13 +38,82 @@
           <h3 class="text-base font-medium">Rain Status: <%= item.status %></h3>
         </div>
       </div>
-      <div>
-        <h3 class="text-base font-medium text-left">Location: <%= item.location %></h3>
-      </div>
-      <div class="text-sm text-right">
-        <%= item.date %> <%= item.time %>
+      <div class="flex justify-between items-center text-sm">
+        <h3 class="font-small">Location: <%= item.location %></h3>
+        <h3 class="font-small text-right"><%= item.date %> <%= item.time %></h3>
       </div>
     </div>
   <% }); %>
 </div>
+
+<!-- Pagination Controls -->
+<div id="pagination-controls" class="flex justify-center mt-4 mb-16">
+    <button id="first-page" class="px-4 py-2 bg-gray-300 rounded-lg" ${currentPage === 1 ? 'disabled' : ''}>First</button>
+    <span id="page-info" class="mx-4">Page 1</span>
+    <!-- Page buttons will be dynamically inserted here -->
+    <button id="last-page" class="px-4 py-2 bg-gray-300 rounded-lg" ${currentPage === totalPages ? 'disabled' : ''}>Last</button>
+</div>
+
+
+
+<script>
+  $(document).ready(function() {
+    const itemsPerPage = 20; // Number of items per page
+    const $dataItems = $('.alert-item'); // Ensure this class matches your HTML
+    const totalPages = Math.ceil($dataItems.length / itemsPerPage);
+    let currentPage = 1;
+
+    function createPaginationControls() {
+        const $paginationControls = $('#pagination-controls');
+        $paginationControls.empty();
+        
+        const firstButton = `<button id="first-page" class="px-4 py-2 bg-gray-300 rounded-lg" ${currentPage === 1 ? 'disabled' : ''}>First</button>`;
+        $paginationControls.append(firstButton);
+
+        const startPage = Math.max(1, currentPage - 2); // Start page
+        const endPage = Math.min(totalPages, currentPage + 2); // End page
+
+        // Display page buttons
+        for (let i = startPage; i <= endPage; i++) {
+            const pageButton = `<button class="page-number px-4 py-2 ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-gray-300 text-gray-800'} rounded-lg" data-page="${i}">${i}</button>`;
+            $paginationControls.append(pageButton);
+        }
+        
+        const lastButton = `<button id="last-page" class="px-4 py-2 bg-gray-300 rounded-lg" ${currentPage === totalPages ? 'disabled' : ''}>Last</button>`;
+        $paginationControls.append(lastButton);
+
+        // Update page info
+        $('#page-info').text(`Page ${currentPage}`);
+    }
+
+    function showPage(page) {
+        $dataItems.addClass('hidden');
+        $dataItems.slice((page - 1) * itemsPerPage, page * itemsPerPage).removeClass('hidden');
+        currentPage = page;
+        createPaginationControls();
+    }
+
+    $(document).on('click', '#first-page', function() {
+        if (currentPage > 1) {
+            showPage(1);
+        }
+    });
+
+    $(document).on('click', '#last-page', function() {
+        if (currentPage < totalPages) {
+            showPage(totalPages);
+        }
+    });
+
+    $(document).on('click', '.page-number', function() {
+        const page = $(this).data('page');
+        showPage(page);
+    });
+
+    showPage(currentPage); // Show the first page initially
+});
+</script>
+
+
+
 
