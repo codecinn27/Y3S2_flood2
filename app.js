@@ -8,8 +8,6 @@
 
 require('dotenv').config();
 
-const mongoose = require('mongoose');
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -71,7 +69,7 @@ app.use((err, req, res, next) => {
   res.status(err.status || 500).json({ error: err.message });
 });
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3008;
 //using server.listern instead of app.listen
 server.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

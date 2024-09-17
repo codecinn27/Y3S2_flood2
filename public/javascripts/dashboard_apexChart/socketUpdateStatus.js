@@ -1,11 +1,5 @@
 const socket = io();
 
-// function updateStatus(newData) {
-//     // Update the status in the DOM
-//     const statusElement = document.getElementById('status');
-//     // Update the status text
-//     statusElement.innerText = `Status: ${newData.status}`;
-// }
 function updateStatus(newData) {
     const statusElement = document.getElementById('status');
     const buttonElement = statusElement.closest('div');
