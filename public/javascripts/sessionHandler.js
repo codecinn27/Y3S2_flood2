@@ -24,4 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
         ayerKerohLink.href = `/ayerkeroh`;
         durianTunggalLink.href = `/duriantunggal`;
     }
+
+    
 });
