@@ -2,7 +2,7 @@
     <!-- <h2>
         <%= data.locationName %>
     </h2> -->
-
+    <%- include('../partials/headerStatus') %>
     <div class="container mx-auto px-4 mt-16">
         <!-- 1st Row -->
         <div class="flex flex-wrap -mx-4">
@@ -43,5 +43,6 @@
         var data2 = <%- JSON.stringify(data2) %>
        
     </script>
+    
     <script src="/javascripts/dashboard_apexChart/databaseUpdate.js"></script>
     <script src="/javascripts/dashboard_apexChart/socketUpdate.js"></script>

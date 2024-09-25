@@ -21,7 +21,7 @@ router.get('/history/:id', async (req, res, next) => {
     let dataStatus;
     if (id === "ayerkeroh") {
       data2 = await mongooseController.returnAyerKerohData();
-      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+      dataStatus = await mongooseController.returnLatestAyerKerohDataStatus();
       
     } else if (id === "duriantunggal") {
       data2 = await mongooseController.returnDurianTunggalData();
@@ -55,7 +55,7 @@ router.get('/graph/:id', async (req, res, next) => {
     let dataStatus;
     if (id === "ayerkeroh") {
       data2 = await mongooseController.returnAyerKeroh24Data();
-      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+      dataStatus = await mongooseController.returnLatestAyerKerohDataStatus();
     } else if (id === "duriantunggal") {
       data2 = await mongooseController.returnDurianTunggal24Data();    
       dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();  
@@ -85,7 +85,7 @@ router.get('/graph/all/:id', async (req, res, next) => {
     let dataStatus;
     if (id === "ayerkeroh") {
       data2 = await mongooseController.returnAyerKerohData();
-      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+      dataStatus = await mongooseController.returnLatestAyerKerohDataStatus();
     } else if (id === "duriantunggal") {
       data2 = await mongooseController.returnDurianTunggalData();
       dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
@@ -116,7 +116,7 @@ router.get('/alert', async (req, res, next) => {
     console.log("log: ",req.session.userId);
     
     if(req.session.userId === "ayerkeroh"){
-      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+      dataStatus = await mongooseController.returnLatestAyerKerohDataStatus();
     }else if(req.session.userId === "duriantunggal"){
       dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
     }
@@ -159,12 +159,15 @@ router.get('/:id', async (req, res, next) => {
     let dataStatus;
     if (id === "ayerkeroh") {
       data2 = await mongooseController.getLast24AyerKerohData();
-      dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+      dataStatus = await mongooseController.returnLatestAyerKerohDataStatus();
+      console.log("status ayerkeroh: ", dataStatus);
+      
     } else if (id === "duriantunggal") {
       data2 = await mongooseController.getLast24DurianTunggalData();
       dataStatus = await mongooseController.returnLatestDurianTunggalDataStatus();
+      console.log("status durian tunggal: ", dataStatus);
     }  
-
+    
     let page = 1;
     res.render('iot/dashboard', { data:{ id, locationName } , data2, dataStatus, page});
   } catch (error) {

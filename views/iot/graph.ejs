@@ -1,7 +1,7 @@
 <% layout('layouts/boilerplate') %>
 <!-- <h1>Graph</h1> -->
 <!-- <h2><%= data.locationName %></h2> -->
-
+<%- include('../partials/headerStatus') %>
 <div class="mt-16"></div>
 <div class="flex flex-row flex-wrap w-full p-2 justify-center items-center">
     <a href="/graph/<%= data.id %>"
@@ -24,6 +24,7 @@
 </script>
 <script src="/javascripts/graph_apexChart/statusMixedChart.js"></script>
 <script src="/javascripts/graph_apexChart/lineChart.js"></script>
+
 
 
 

@@ -1,5 +1,5 @@
 <% layout('layouts/boilerplate') %>
-
+<%- include('../partials/headerStatus') %>
 <div class="mt-16"></div>
 <div class="m-8">
   <% data2.forEach((item, index) => { 
@@ -113,6 +113,7 @@
     showPage(currentPage); // Show the first page initially
 });
 </script>
+
 
 
 
