@@ -15,7 +15,7 @@
 <body class="bg-gray-100 text-gray-800">
 
     <!-- 1st Section: Logo and Main Page Button -->
-    <header class="flex justify-between items-center p-6 bg-white shadow-md">
+    <header class="flex justify-between items-center p-6 bg-white shadow-md" style="min-height: 10vh;">
         <div class="flex items-center">
             <div class="bg-blue-700 w-2 h-8"></div>
             <span class="ml-4 text-2xl font-bold">FloodEye 2.0</span>
@@ -28,13 +28,12 @@
     </header>
 
     <!-- 2nd Section: Header with buttons -->
-    <section class="flex flex-col items-center justify-center py-16 bg-blue-500 text-white bg-cover bg-center relative" style="background-image: url('https://res.cloudinary.com/du43x2mnv/image/upload/v1726592512/flood-965092_1280_rvhl7z.jpg');">
-        <h1 class="text-4xl font-bold mb-6 text-center">
-            Innovating for a <span class="text-yellow-300 italic">Safer</span> Tomorrow
-        </h1>
-        <p class="mb-6 text-center max-w-2xl">
+    <section class="flex flex-col items-center justify-center py-16 bg-blue-500 text-white bg-cover bg-center relative" 
+            style="background-image: url('    https://images.unsplash.com/photo-1581059686229-de26e6ae5dc4?q=80&w=2072&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size: cover; background-position: center; height: 90vh;">
+        <h1 class="text-4xl font-bold mb-6 text-center"><span class="auto-type"></span></h1>
+        <span class="mb-6 text-center max-w-2xl">
             Transforming data into actionable insights, we empower communities with real-time flood monitoring and risk management. Our solution reimagines flood safety, providing the tools to protect lives and secure a more resilient future.
-        </p>
+        </span>
         <div class="flex space-x-4">
             <button onclick="scrollToTeam()" class="px-6 py-2 bg-white text-blue-500 rounded hover:bg-blue-100">
                 Meet Our Team
@@ -353,6 +352,17 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+    <!-- typing script -->
+    <script>
+
+        var title = new Typed('.auto-type', {
+            strings: ['Transforming Data into Action','Innovating for a Safer Tomorrow', 'Empowering Communities with Real-Time Flood Insights'],
+            typeSpeed: 40,
+            backSpeed: 20,
+            loop: true
+        })
+    </script>
     <script>
         function scrollToTeam() {
             document.getElementById('team').scrollIntoView({ behavior: 'smooth' });
@@ -375,4 +385,7 @@ https://codepen.io/yudizsolutions/pen/wvzrPoj
 https://www.creative-tim.com/twcomponents/component/carousel-slider-with-tailwindcss-and-jquery
 https://www.creative-tim.com/twcomponents/component/slider-9
 
+
+flood image
+https://res.cloudinary.com/du43x2mnv/image/upload/v1726592512/flood-965092_1280_rvhl7z.jpg
 -->
