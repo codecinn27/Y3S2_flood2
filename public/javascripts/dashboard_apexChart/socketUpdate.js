@@ -21,7 +21,7 @@ function updateCharts(newData) {
     humiditySeriesData.push({ x: new Date(datetime), y: newData.humidity });
 
     // Determine if the new data falls into Light Rain or Heavy Rain
-    if (newData.rain > 2200) {
+    if (newData.rain > 1200) {
         lightRainSeries.push(1200);  // Light Rain is capped at 30
         heavyRainSeries.push(newData.rain - 1200); // The rest goes to Heavy Rain
     } else {
