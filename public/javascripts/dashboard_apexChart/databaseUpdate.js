@@ -16,10 +16,10 @@ function populateCharts(data2) {
         tempSeriesData.push({ x: new Date(datetime), y: entry.tempC });
         humiditySeriesData.push({ x: new Date(datetime), y: entry.humidity });
 
-        // Rain data logic (light rain capped at 30, remainder goes to heavy rain)
-        if (entry.rain > 30) {
-            lightRainSeries.push(30);  // Light Rain is capped at 30
-            heavyRainSeries.push(entry.rain - 30);  // The rest goes to Heavy Rain
+        // Rain data logic (light rain capped at 1200, remainder goes to heavy rain)
+        if (entry.rain > 1200) {
+            lightRainSeries.push(1200);  // Light Rain is capped at 1200
+            heavyRainSeries.push(entry.rain - 1200);  // The rest goes to Heavy Rain
         } else {
             lightRainSeries.push(entry.rain);
             heavyRainSeries.push(0);  // No Heavy Rain if less than 30
