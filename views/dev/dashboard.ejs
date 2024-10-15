@@ -1,0 +1,49 @@
+<% layout('layouts/boilerplate_dev') %>
+
+    <!-- <h2>
+        <%= data.locationName %>
+    </h2> -->
+    <%- include('../partials/headerStatus_dev') %>
+    <div class="container mx-auto px-4 mt-16">
+        <!-- 1st Row -->
+        <div class="flex flex-wrap -mx-4">
+            <div class="w-full md:w-1/3 px-4 mb-4"> <!-- 1/3 width for each box -->
+                <div class="box box3 bg-white p-4 rounded shadow">
+                    <div id="spark_water"></div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 px-4 mb-4"> <!-- 1/3 width for each box -->
+                <div class="box box3 bg-white p-4 rounded shadow">
+                    <div id="spark_temp"></div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 px-4 mb-4"> <!-- 1/3 width for each box -->
+                <div class="box box3 bg-white p-4 rounded shadow">
+                    <div id="spark_humidity"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2nd Row -->
+        <div class="flex flex-wrap -mx-4 mb-20"> <!-- Added margin bottom -->
+            <div class="w-full px-4 mb-4"> <!-- Full width for rain_bar -->
+                <div class="box bg-white p-4 rounded shadow">
+                    <div id="rain_bar"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/javascripts/dashboard_apexChart/waterLineChart.js"></script>
+    <script src="/javascripts/dashboard_apexChart/tempLineChart.js"></script>
+    <script src="/javascripts/dashboard_apexChart/humidityLineChart.js"></script>
+    <script src="/javascripts/dashboard_apexChart/rainBarChart.js"></script>
+    <!-- must pass the data like cannot put the data in the script -->
+    <script>
+
+        var data2 = <%- JSON.stringify(data2) %>
+       
+    </script>
+    
+    <script src="/javascripts/dashboard_apexChart/databaseUpdate.js"></script>
+    <script src="/javascripts/dashboard_apexChart/socketUpdate.js"></script>

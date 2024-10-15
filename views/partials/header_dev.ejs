@@ -1,0 +1,46 @@
+<div id="loadingScreen" class="fixed inset-0 bg-white dark:bg-gray-900 flex items-center justify-center z-50 hidden">
+    <div class="loader"></div> <!-- You can style this loader or replace it with an animation -->
+</div>
+<header id="header"
+class="sticky top-0 left-0 w-full bg-gray-100 text-gray-900 shadow-lg z-50 transition-colors duration-300">
+<div class="container mx-auto px-4 py-2 flex justify-between items-center">
+
+    <!-- Left Side: Icons and Title -->
+    <div class="flex items-center space-x-4">
+        <!-- About Us Icon -->
+        <a href="/" class="icon w-10 h-10 flex justify-center items-center rounded-full duration-300">
+            <img src="https://res.cloudinary.com/du43x2mnv/image/upload/v1724209712/flood_logo_jls8hq.png" alt="FloodEye Logo">
+        </a>
+        <div style="font-weight:bold">FloodEye 2.0</div>
+    </div>
+
+    <!-- Right Side: Dropdown and Switch -->
+    <div class="flex items-center space-x-4">
+        <!-- Dropdown Menu -->
+        <div class="relative">
+            <button id="dropdownButton"
+                class="dropdown-button text-gray-900 px-4 py-2 rounded-md focus:outline-none transition-colors duration-300">
+                Menu
+            </button>
+            <div id="dropdownMenu" class="dropdown-menu absolute right-0 mt-2 w-48 shadow-lg rounded-md hidden">
+                <a id="linkAyerKeroh" href="#" class="block px-4 py-2 hover:bg-gray-200 transition-colors duration-300">Ayer Keroh</a>
+                <a id="linkDurianTunggal" href="#" class="block px-4 py-2 hover:bg-gray-200 transition-colors duration-300">Durian Tunggal</a>
+            </div>
+        </div>
+
+        <!-- Light/Dark Theme Switch -->
+        <label class="flex items-center cursor-pointer">
+            <input type="checkbox" id="themeToggle" class="hidden">
+            <div
+                class="switch-background w-12 h-6 rounded-full flex items-center p-1 transition-colors duration-300">
+                <div id="toggleDot"
+                    class="switch-dot w-4 h-4 rounded-full shadow-md transform transition-transform duration-300">
+                </div>
+            </div>
+        </label>
+    </div>
+</div>
+
+
+</header>
+

@@ -1,7 +1,6 @@
 // Import your models
 const { AyerKeroh, DurianTunggal } = require('../models/ver1'); // Import your models
 
-// Controller function to save data to MongoDB
 // const saveMqttData = async (topic, message) => {
 //   try {
 //     let model;
@@ -21,10 +20,13 @@ const { AyerKeroh, DurianTunggal } = require('../models/ver1'); // Import your m
 //       const malaysiaOffset = 8 * 60 * 60 * 1000; // 8 hours in milliseconds
 //       const malaysiaTime = new Date(Date.now() + malaysiaOffset);
 
+//       // Round the rain value to two decimal places
+//       const roundedRain = Math.round(data.rain * 100) / 100
+
 //       const newData = new model({
 //         tempC: data.tempC,
 //         humidity: data.humidity,
-//         rain: data.rain,
+//         rain: roundedRain,
 //         rainOutput: data.rain_output,
 //         distance: data.distance_cm, // This is required
 //         status: data.status,
@@ -41,6 +43,8 @@ const { AyerKeroh, DurianTunggal } = require('../models/ver1'); // Import your m
 //     console.error('Error saving data to MongoDB:', err);
 //   }
 // };
+
+let lastSavedTime = 0;
 
 const saveMqttData = async (topic, message) => {
   try {
@@ -62,28 +66,38 @@ const saveMqttData = async (topic, message) => {
       const malaysiaTime = new Date(Date.now() + malaysiaOffset);
 
       // Round the rain value to two decimal places
-      const roundedRain = Math.round(data.rain * 100) / 100
+      const roundedRain = Math.round(data.rain * 100) / 100;
 
-      const newData = new model({
-        tempC: data.tempC,
-        humidity: data.humidity,
-        rain: roundedRain,
-        rainOutput: data.rain_output,
-        distance: data.distance_cm, // This is required
-        status: data.status,
-        date: data.date,
-        time: data.time,
-        mongoDBtime: malaysiaTime, // Adjusted to Malaysia Time
-      });
+      // Check if 10 minutes have passed since the last save
+      const currentTime = Date.now();
+      const tenMinutes = 10 * 60 * 1000; // 10 minutes in milliseconds
 
-      // Save the data to MongoDB
-      await newData.save();
-      console.log(`Data saved to ${model.modelName}`);
+      if (currentTime - lastSavedTime >= tenMinutes) {
+        const newData = new model({
+          tempC: data.tempC,
+          humidity: data.humidity,
+          rain: roundedRain,
+          rainOutput: data.rain_output,
+          distance: data.distance_cm, // This is required
+          status: data.status,
+          date: data.date,
+          time: data.time,
+          mongoDBtime: malaysiaTime, // Adjusted to Malaysia Time
+        });
+
+        // Save the data to MongoDB
+        await newData.save();
+        console.log(`Data saved to ${model.modelName}`);
+        
+        // Update last saved time
+        lastSavedTime = currentTime;
+      }
     }
   } catch (err) {
     console.error('Error saving data to MongoDB:', err);
   }
 };
+
 
 const getLast10DurianTunggalData = async(req, res) => {
   try {

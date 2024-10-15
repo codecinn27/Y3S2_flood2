@@ -1,0 +1,21 @@
+<footer class="fixed bottom-4 left-0 right-0 flex justify-center opacity-100 transition-opacity duration-300">
+    <div>
+        <!-- Back to Top Button -->
+        <button id="backToTop"
+            class="fixed bottom-20 right-4 p-3 w-12 h-12 rounded-full bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-lg transition-colors duration-300 flex items-center justify-center">
+            <i class="fa-solid fa-arrow-up"></i>
+        </button>
+    </div>
+    <div class="w-full rounded-full mx-4 py-2 shadow-lg flex justify-around relative overflow-hidden">
+        <div id="footerHighlight"
+            class="absolute inset-y-0 left-0 bg-red-300 dark:bg-red-700 w-1/4 transition-all duration-300"></div>
+        <a href="/b022110115/<%= data.id %>" id="section1" class="footer-section text-center w-1/4 z-10 relative transition-colors duration-300"
+            data-section="/<%= data.id %>" data-page="1">Dashboard</a>
+        <a href="/b022110115/history/<%= data.id %>" id="section2" class="footer-section text-center w-1/4 z-10 relative transition-colors duration-300"
+            data-section="/history/<%= data.id %>" data-page="2">History</a>
+        <a href="/b022110115/alert" id="section3" class="footer-section text-center w-1/4 z-10 relative transition-colors duration-300"
+            data-section="/alert" data-page="3">Alert</a>
+        <a href="/b022110115/graph/<%= data.id %>" id="section3" class="footer-section text-center w-1/4 z-10 relative" 
+            data-section="/graph/<%= data.id %>" data-page="4">Graph</a>
+    </div>
+</footer>

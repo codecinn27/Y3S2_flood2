@@ -1,0 +1,182 @@
+<% layout('layouts/boilerplate_dev') %>
+<%- include('../partials/headerStatus_dev') %>
+<div class="mt-16"></div>
+<div id="data-container">
+
+    <% data2.forEach(item => { 
+        // Determine the classes based on status
+        let boxBgClass = 'bg-white'; // Default box background
+        let boxBorderClass = 'border-gray-200'; // Default box border
+        let boxShadowClass = 'shadow'; // Default box shadow
+        let statusTextClass = 'text-gray-900'; // Default text color
+        let iconColorClass = 'text-gray-600'; // Default icon color
+    
+        if (item.status === 'Warning') {
+            boxBgClass = 'bg-yellow-300'; // Darker yellow background
+            boxBorderClass = 'border-yellow-400'; // Border color for warning
+            boxShadowClass = 'shadow-md'; // Adjust shadow if needed
+            statusTextClass = 'text-gray-900'; // Adjust as needed
+            iconColorClass = 'text-yellow-600';
+        } else if (item.status === 'Danger') {
+            boxBgClass = 'bg-red-500'; // Darker red background
+            boxBorderClass = 'border-red-400'; // Border color for danger
+            boxShadowClass = 'shadow-md'; // Adjust shadow if needed
+            statusTextClass = 'text-gray-900'; // Adjust as needed
+            iconColorClass = 'text-red-600';
+        }
+    %>
+    <div class="data-item">
+        <div class="w-full flex justify-center p-3">
+            <div class="w-full max-w-3xl p-2 <%= boxBgClass %> border <%= boxBorderClass %> rounded-lg <%= boxShadowClass %> sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+                <div class="mb-4">
+                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
+                        <%= item.date %> <%= item.time %>
+                    </h5>
+                </div>
+                <!-- 3 x 2 Grid layout -->
+                <div class="grid grid-cols-3 gap-4 mb-4">
+                    <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                        <i class="fa fa-thermometer-full fa-2x text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Temperature</h6>
+                        <p class="text-lg font-bold text-gray-900 dark:text-white"><%= item.tempC.toFixed(1) %>°C</p>
+                    </div>
+                    <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                        <i class="fa fa-tint fa-2x text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Humidity</h6>
+                        <p class="text-lg font-bold text-gray-900 dark:text-white"><%= item.humidity %> %</p>
+                    </div>
+                    <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                        <i class="fa fa-line-chart fa-2x text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Rain Value</h6>
+                        <p class="text-lg font-bold text-gray-900 dark:text-white"><%= item.rain %> mm</p>
+                    </div>
+                    <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                        <i class="fa fa-umbrella fa-2x <%= item.rain > 10 ? 'text-blue-600' : '' %> dark:text-blue-600" aria-hidden="true"></i>
+                        <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Rain Status</h6>
+                        <p class="text-lg font-bold text-gray-900 dark:text-white">
+                            <% if (item.rain === 0) { %>
+                                No Rain
+                            <% } else if (item.rain > 0 && item.rain < 2.5) { %>
+                                Light Rain
+                            <% } else if (item.rain >= 2.5 && item.rain <= 7.6) { %>
+                                Moderate Rain
+                            <% } else if (item.rain > 7.6 && item.rain <= 50) { %>
+                                Heavy Rain
+                            <% } else if (item.rain > 50 && item.rain <= 100) { %>
+                                Very Heavy Rain
+                            <% } else { %>
+                                Extreme Rain
+                            <% } %>
+                        </p>
+                    </div>
+                    <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                        <i class="fa fa-window-maximize fa-2x text-gray-600 dark:text-gray-400" aria-hidden="true"></i>
+                        <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Water Level</h6>
+                        <p class="text-lg font-bold text-gray-900 dark:text-white"><%= item.distance %> cm</p>
+                    </div>
+                    <div class="p-2 bg-gray-100 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                        <i class="fa fa-bullseye fa-2x <%= iconColorClass %> dark:text-yellow-500" aria-hidden="true"></i>
+                        <h6 class="text-md font-semibold text-gray-700 dark:text-gray-200">Status</h6>
+                        <p class="text-lg font-bold <%= statusTextClass %> dark:text-white"><%= item.status %></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+       
+    <% }); %>
+
+    
+</div>
+
+<!-- Pagination Controls -->
+<div id="pagination-controls" class="flex justify-center mt-4 mb-16">
+    <button id="first-page" class="px-4 py-2 bg-gray-300 rounded-lg">First</button>
+    <span id="page-info" class="mx-4">Page 1</span> <!-- Default page info; will be updated by JavaScript -->
+    <button id="last-page" class="px-4 py-2 bg-gray-300 rounded-lg">Last</button>
+</div>
+
+
+
+<script>
+    $(document).ready(function() {
+        const itemsPerPage = 20;
+        const $dataItems = $('.data-item');
+        const totalItems = $dataItems.length;
+        const totalPages = Math.ceil(totalItems / itemsPerPage);
+        let currentPage = 1;
+        const maxPageButtons = 5;
+
+        function showPage(page) {
+            $dataItems.addClass('hidden'); // Hide all items
+            $dataItems.slice((page - 1) * itemsPerPage, page * itemsPerPage).removeClass('hidden'); // Show current page items
+            currentPage = page;
+            updatePaginationControls();
+        }
+
+        function updatePaginationControls() {
+            const $paginationControls = $('#pagination-controls');
+            const $pageInfo = $('#page-info');
+            $paginationControls.empty();
+
+            // First button
+            $paginationControls.append(`
+                <button id="first-page" class="px-4 py-2 bg-gray-300 rounded-lg ${currentPage === 1 ? 'disabled' : ''}">First</button>
+            `);
+
+            // Page numbers
+            let startPage, endPage;
+            if (totalPages <= maxPageButtons) {
+                startPage = 1;
+                endPage = totalPages;
+            } else {
+                if (currentPage <= Math.ceil(maxPageButtons / 2)) {
+                    startPage = 1;
+                    endPage = maxPageButtons;
+                } else if (currentPage + Math.floor(maxPageButtons / 2) >= totalPages) {
+                    startPage = totalPages - maxPageButtons + 1;
+                    endPage = totalPages;
+                } else {
+                    startPage = currentPage - Math.floor(maxPageButtons / 2);
+                    endPage = currentPage + Math.floor(maxPageButtons / 2);
+                }
+            }
+
+            for (let i = startPage; i <= endPage; i++) {
+                $paginationControls.append(`
+                    <button class="page-number px-4 py-2 ${i === currentPage ? 'bg-blue-500 text-white' : 'bg-white text-gray-500'}" data-page="${i}">${i}</button>
+                `);
+            }
+
+            // Last button
+            $paginationControls.append(`
+                <button id="last-page" class="px-4 py-2 bg-gray-300 rounded-lg ${currentPage === totalPages ? 'disabled' : ''}">Last</button>
+            `);
+
+            // Update page info
+            $pageInfo.text(`Page ${currentPage}`);
+        }
+
+        $(document).on('click', '#first-page', function(e) {
+            e.preventDefault();
+            showPage(1);
+        });
+
+        $(document).on('click', '#last-page', function(e) {
+            e.preventDefault();
+            showPage(totalPages);
+        });
+
+        $(document).on('click', '.page-number', function(e) {
+            e.preventDefault();
+            const page = $(this).data('page');
+            showPage(page);
+        });
+
+        showPage(currentPage); // Show the first page initially
+    });
+</script>
+
+
+

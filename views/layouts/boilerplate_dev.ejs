@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="x-icon" href="https://res.cloudinary.com/du43x2mnv/image/upload/v1724209712/flood_logo_jls8hq.png">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="/stylesheets/style.css">
+    <link rel="stylesheet" href="/stylesheets/SluiceButton.css">
+    <title>Zte5G Flood</title>
+</head>
+<body class="bg-white text-gray-900 fade-out transition-opacity duration-300">
+    <%- include('../partials/header_dev') %>
+    <%- body %>
+    <%- include('../partials/footer_dev') %>
+
+    <script>
+        var data = <%- JSON.stringify(data) %>;
+        var dataStatus = <%- JSON.stringify(dataStatus) %>;
+        var page = <%- JSON.stringify(page) %>;
+    </script>
+    <script src="/javascripts/frontend.js"></script>
+    <script src="/javascripts/sessionHandler.js"></script>
+    <script src="/javascripts/dataStatus.js"></script>
+    <script src="/javascripts/dashboard_apexChart/socketUpdateStatus.js"></script>
+</body>
+</html>
