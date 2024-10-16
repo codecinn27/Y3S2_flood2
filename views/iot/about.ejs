@@ -12,6 +12,73 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.4.0/flowbite.min.js"></script>
     <title>About Us</title>
+
+    <style>
+      .collapse {
+        transition: max-height 0.3s ease-out;
+        overflow: hidden;
+        display: none; /* Hide by default */
+      }
+      .collapse-visible {
+        display: block; /* Show when visible */
+        max-height: 1000px; /* Adjust as needed */
+      }
+      .accordion-button {
+        background-color: #60A5FA; /* Lighter blue */
+        padding: 10px 15px; /* Spacing inside buttons */
+        color: #fff; /* Text color */
+        border: none; /* Remove default border */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s, transform 0.3s; /* Smooth transition */
+        width: 100%; /* Full width */
+      }
+      .accordion-button:hover {
+        background-color: #93C5FD; /* Even lighter blue on hover */
+        transform: scale(1.02); /* Slight scaling effect */
+      }
+      .collapse-content {
+        background-color: #BFDBFE; /* Light blue for expanded content */
+        padding: 10px 15px; /* Spacing inside expanded content */
+        border-radius: 5px; /* Rounded corners */
+        margin-top: 10px; /* Space between button and content */
+        width: 100%; /* Full width */
+      }
+      .feature-image-container {
+        width: 100%;
+        height: 300px; /* Adjust this height */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(255, 255, 255, 0.8); /* Light background for better contrast */
+        border-radius: 10px; /* Rounded corners */
+        margin-top: 10px; /* Space between image container and text */
+      }
+      .feature-image {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain; /* Ensures the image fits inside while maintaining the aspect ratio */
+      }
+      .image-background {
+        background-color: #f3f4f6; /* Light gray background for images */
+        padding: 20px; /* Padding around the image */
+        border-radius: 10px; /* Rounded corners */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+      }
+      .button {
+        background-color: #f9fafb; /* Light background for buttons */
+        padding: 10px 15px; /* Spacing inside buttons */
+        border: none; /* Remove default border */
+        border-radius: 5px; /* Rounded corners */
+        transition: background-color 0.3s; /* Smooth transition */
+      }
+      .button:hover {
+        background-color: #e0f2fe; /* Light blue on hover */
+      }
+      .button:focus {
+        outline: none; /* Remove default outline on focus */
+      }
+    </style>
+
 </head>
 
 <body class="bg-gray-100 text-gray-800">
@@ -50,7 +117,7 @@
 
     <!-- 3rd Section: Our Development Team -->
     <section class="bg-gradient-to-b from-[#9DB2BF] to-[#f8fafc]">
-        <div id="team" class="py-6 dark:bg-gray-100 dark:text-gray-800">
+        <div id="team" class="py-4 dark:bg-gray-100 dark:text-gray-800">
             <div class="container flex flex-col items-center justify-center p-4 mx-auto sm:p-10">
                 <!-- section header -->
                 <header class="text-center mx-auto mb-12">
@@ -327,22 +394,77 @@
         </div>
     </section>
 
-    <!-- 4th Section: Learn More about the System -->
-    <section id="learn-more" class="py-16 bg-gray-50 text-center">
-        <h2 class="text-3xl font-bold mb-8">How Our System Works</h2>
-        <p class="px-8 sm:px-24 lg:px-48 text-lg text-gray-700 mb-6">
-            FloodEye 2.0 provides real-time flood monitoring using state-of-the-art IoT technology. With the integration
-            of various sensors, the system detects rainfall levels, water flow, and other environmental factors,
-            allowing for early warning of potential floods.
-        </p>
-        <h3 class="text-2xl font-bold mt-8 mb-4">Key Features</h3>
-        <ul class="list-disc list-inside px-8 sm:px-24 lg:px-48 text-left text-gray-700">
-            <li>Real-time monitoring with live data visualizations.</li>
-            <li>Automated alerts and notifications via Telegram and email.</li>
-            <li>Advanced data analysis and predictive modeling.</li>
-            <li>Seamless user interface for controlling emergency responses, such as opening sluice gates.</li>
-        </ul>
-    </section>
+    <!-- 4th Section: Key Features-->
+     <section class="bg-gray-100 pt-0.3px pb-8">
+      <div class="max-w-2xl mx-auto rounded-xl overflow-hidden md:max-w-lg bg-white">
+        <div class="md:flex bg-white">
+          <div class="p-8 bg-transparent">
+            <h1 class="tracking-wide text-4xl text-black font-semibold text-center mb-12">Key Features</h1>
+            
+            <div class="mt-4">
+              <button id="collapseButton1" class="accordion-button w-full text-left flex justify-between items-center pr-2">
+                Real-time monitoring with live data visualizations
+                <i id="arrow1" class="fas fa-chevron-down transition-transform ml-4"></i>
+              </button>
+              <div id="collapseContent1" class="collapse collapse-content mt-2"> <!-- Increased margin-top here -->
+                <p class="text-gray-700 mb-2">This feature enables users to see live data updates, allowing for immediate insights into system performance and status.</p>
+                <div class="image-background">
+                  <div class="feature-image-container">
+                    <img class="feature-image" src="https://res.cloudinary.com/dcepv9pfl/image/upload/v1727634504/Screenshot_2024-09-30_022656_asbxwa.png" alt="Real-time monitoring with live data visualizations">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <button id="collapseButton2" class="accordion-button w-full text-left flex justify-between items-center pr-2">
+                Automated alerts and notifications via Telegram and email
+                <i id="arrow2" class="fas fa-chevron-down transition-transform ml-4"></i>
+              </button>
+              <div id="collapseContent2" class="collapse collapse-content mt-2"> <!-- Increased margin-top here -->
+                <p class="text-gray-700 mb-2">Receive instant notifications through Telegram and email, ensuring you are always informed about critical updates.</p>
+                <div class="image-background">
+                  <div class="feature-image-container">
+                    <img class="feature-image" src="https://res.cloudinary.com/dcepv9pfl/image/upload/v1727701558/WhatsApp_Image_2024-09-30_at_18.54.58_dfe776e4_wfgup9.jpg" alt="Automated alerts and notifications via Telegram and email">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <button id="collapseButton3" class="accordion-button w-full text-left flex justify-between items-center pr-2">
+                Advanced data analysis and predictive modeling
+                <i id="arrow3" class="fas fa-chevron-down transition-transform ml-4"></i>
+              </button>
+              <div id="collapseContent3" class="collapse collapse-content mt-2"> <!-- Increased margin-top here -->
+                <p class="text-gray-700 mb-2">Utilize advanced algorithms to analyze data trends and make accurate predictions, enhancing decision-making capabilities.</p>
+                <div class="image-background">
+                  <div class="feature-image-container">
+                    <img class="feature-image" src="https://res.cloudinary.com/dcepv9pfl/image/upload/v1727701053/Screenshot_2024-09-30_190117_ctijqf.png" alt="Advanced data analysis and predictive modeling">
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="mt-4">
+              <button id="collapseButton4" class="accordion-button w-full text-left flex justify-between items-center pr-2">
+                Seamless user interface for controlling emergency responses
+                <i id="arrow4" class="fas fa-chevron-down transition-transform ml-4"></i>
+              </button>
+              <div id="collapseContent4" class="collapse collapse-content mt-2"> <!-- Increased margin-top here -->
+                <p class="text-gray-700 mb-2">An intuitive interface allows users to manage emergency situations effectively, such as opening sluice gates with just a click.</p>
+                <div class="image-background">
+                  <div class="feature-image-container">
+                    <img class="feature-image" src="https://res.cloudinary.com/dcepv9pfl/image/upload/v1729006093/Untitled_design_1_s4ru7l.png" alt="Seamless user interface for controlling emergency responses">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+     </section>
 
     <!-- 5th Section: Footer -->
     <footer class="bg-blue-600 text-white py-8">
@@ -373,6 +495,28 @@
         function scrollToLearnMore() {
             document.getElementById('learn-more').scrollIntoView({ behavior: 'smooth' });
         }
+
+        document.querySelectorAll('[id^="collapseButton"]').forEach(button => {
+      button.addEventListener('click', function() {
+        const contentId = button.id.replace('collapseButton', 'collapseContent');
+        const content = document.getElementById(contentId);
+        const arrow = button.querySelector('i');
+        
+        // Toggle content visibility
+        if (content.classList.contains('collapse-visible')) {
+          content.classList.remove('collapse-visible');
+          content.classList.add('collapse'); // Ensure the content is hidden
+        } else {
+          content.classList.remove('collapse');
+          content.classList.add('collapse-visible'); // Show the content
+        }
+
+        // Toggle arrow direction
+        arrow.classList.toggle('fa-chevron-down');
+        arrow.classList.toggle('fa-chevron-up');
+      });
+    });
+
     </script>
 </body>
 
