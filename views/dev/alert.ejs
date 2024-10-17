@@ -41,7 +41,7 @@
       <div class="flex justify-between items-center text-sm">
         <h3 class="font-small">Location: <%= item.location %></h3>
         <h3 class="font-small text-right">
-          <%= new Date(new Date(item.mongoDBtime).getTime() - (8 * 60 * 60 * 1000)).toLocaleString() %>
+          <%= new Date(new Date(item.mongoDBtime).getTime()).toLocaleString() %>
         </h3>
       </div>
     </div>

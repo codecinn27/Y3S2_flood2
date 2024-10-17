@@ -30,7 +30,7 @@
             <div class="w-full max-w-3xl p-2 <%= boxBgClass %> border <%= boxBorderClass %> rounded-lg <%= boxShadowClass %> sm:p-8 dark:bg-gray-800 dark:border-gray-700">
                 <div class="mb-4">
                     <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white">
-                        <%= new Date(new Date(item.mongoDBtime).getTime() - (8 * 60 * 60 * 1000)).toLocaleString() %>
+                        <%= new Date(new Date(item.mongoDBtime).getTime()).toLocaleString() %>
                       </h5>
                          
                 </div>
