@@ -33,13 +33,6 @@ function transformData2(data2) {
               x: convertToMalaysiaTime(item.mongoDBtime),
               y: item.rain
             }))
-          },
-          {
-            name: 'Sluice Gate',
-            data: data2.map(item => ({
-              x: convertToMalaysiaTime(item.mongoDBtime),
-              y: item.humidity
-            }))
           }
       ]
     };
