@@ -10,11 +10,16 @@ function populateCharts(data2) {
 
     // Iterate over data2 and populate arrays with values
     data2.forEach(entry => {
-        let datetime = `${entry.date} ${entry.time}`;
+        // let datetime = `${entry.date} ${entry.time}`;
 
-        waterSeriesData.push({ x: new Date(datetime), y: entry.distance });
-        tempSeriesData.push({ x: new Date(datetime), y: entry.tempC });
-        humiditySeriesData.push({ x: new Date(datetime), y: entry.humidity });
+        // waterSeriesData.push({ x: new Date(datetime), y: entry.distance });
+        // tempSeriesData.push({ x: new Date(datetime), y: entry.tempC });
+        // humiditySeriesData.push({ x: new Date(datetime), y: entry.humidity });
+        let datetime = new Date(new Date(entry.mongoDBtime).getTime() - (8 * 60 * 60 * 1000));
+        waterSeriesData.push({ x: datetime, y: entry.distance });
+        tempSeriesData.push({ x: datetime, y: entry.tempC });
+        humiditySeriesData.push({ x: datetime, y: entry.humidity });
+
 
         // Rain data logic (light rain capped at 1200, remainder goes to heavy rain)
         if (entry.rain > 1200) {

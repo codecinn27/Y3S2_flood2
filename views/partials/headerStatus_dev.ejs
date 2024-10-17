@@ -4,6 +4,7 @@
         <i class="fa-solid fa-signal px-2"></i>
         <span id="status" >Status: <%= dataStatus.status %></span>
         <button id="sluiceGateButton" class="mx-5 custom-btn btn-11" onclick="toggleModal('gateModal'); publishMqttMessage();" style="display: none;">Sluice Gate</button>
+        <button id="closeGateButton" class="mx-5 custom-btn btn-11" onclick="toggleModal('gateCloseModal'); publishMqttMessageClose();" style="display: none;">Close Gate</button>
     </div>
 </div>
 
@@ -28,6 +29,26 @@
   </div>
 </div>
 
+<div id="gateCloseModal" class="fixed inset-0 hidden bg-gray-900 bg-opacity-90 overflow-y-auto h-full w-full z-10" onclick="toggleModal('gateCloseModal')">
+  <div class="relative top-20 mx-auto p-5 ring-8 ring-gray-200 w-96 shadow-lg rounded-md bg-white" onclick="event.stopPropagation()">
+    <div class="mt-3 text-center">
+      <!-- Section 1: Topic -->
+      <h3 class="text-lg leading-6 font-medium text-gray-900">Sluice Gate Close 🚪</h3>
+      <hr class="my-2 border-gray-300">
+      <!-- Section 2: Message -->
+      <div class="mt-2 px-7 py-3">
+        <p class="text-sm text-gray-500">🤟🏻🤟🤟🏽Sluice Gate Closed</p>
+      </div>
+      <hr class="my-2 border-gray-300">
+      <!-- Section 3: By FloodEye 2.0 and Close Button -->
+      <div class="mt-2 px-7 py-3 flex justify-between items-center">
+        <p class="text-sm text-gray-500">From: FloodEye 2.0 🙆🏽🙆🏽‍♂️</p>
+        <button class="px-4 py-2 bg-gray-500 text-white text-base font-medium rounded-md shadow-sm hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-300" onclick="toggleModal('gateModal')">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script>
   function toggleModal(modalID){
     document.getElementById(modalID).classList.toggle("hidden");
@@ -41,4 +62,11 @@
     
   }
 
+  function publishMqttMessageClose() {
+    const topic = "zteFlood/sluiceGate/melaka/ayerKeroh";
+    const message = '{"gate":"0"}';
+    socket.emit('publish', { topic, message });
+    console.log("Published message: " + message);
+    
+  }
 </script>
