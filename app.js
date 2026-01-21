@@ -1,11 +1,3 @@
-// npm run dev
-// npm run start
-
-//$env:MONGO_URL="mongodb+srv://codecinnpro:LWmU9e7EKGwQy1P6@cluster0.z8rexks.mongodb.net/idp_iot?retryWrites=true&w=majority&appName=Cluster0"
-//node app.js
-//npm install axios
-//npm install express-session
-
 require('dotenv').config();
 
 var createError = require('http-errors');
@@ -45,26 +37,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
-
-// error handler
-// app.use(function(err, req, res, next) {
-//   // set locals, only providing error in development
-//   res.locals.message = err.message;
-//   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
-//   // Define a default error message if not provided
-//   const errorMessage = err.message || "oops! Page not found";
-
-//   // render the error page
-//   res.status(err.status || 500);
-//   res.render('error2', { errorMessage });
-// });
 
 app.use((err, req, res, next) => {
   console.error("Error occurred:", err.message);
@@ -76,7 +52,8 @@ app.use((err, req, res, next) => {
 const port = process.env.PORT || 3008;
 //using server.listern instead of app.listen
 server.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+  console.log(`Example app listening on port ${port}`);
+  console.log(`🚀 Open the application in your browser: http://localhost:${port}`);
 })
 
 module.exports = {app, server};
