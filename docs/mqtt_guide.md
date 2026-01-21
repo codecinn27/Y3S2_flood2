@@ -4,6 +4,9 @@
 Step 1: Install any mqtt client 
 - what I used is MQTTX
 
+<img width="885" height="874" alt="image" src="https://github.com/user-attachments/assets/47573cde-02f2-4575-a183-7ab2d0d978fc" />
+
+
 Step 2: Connect to the MQTT server
 
 Step 3: Publish message using the sample data below
@@ -98,7 +101,6 @@ Step 3: Publish message using the sample data below
 - Warning range: > 15 cm – 30 cm
 - Danger range: > 30 cm
 
-### ii) tempC:
 ### ii) tempC:
 - Note: This value is not used in the application to determine status, so you can put any value.
 - below is just a sample value that you can use
