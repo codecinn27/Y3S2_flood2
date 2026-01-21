@@ -9,7 +9,11 @@ Step 1: Install any mqtt client
 
 Step 2: Connect to the MQTT server
 
+<img width="914" height="604" alt="image" src="https://github.com/user-attachments/assets/8019a9e4-003c-4adc-927e-e657a0fd8b02" />
+
 Step 3: Publish message using the sample data below
+
+<img width="672" height="370" alt="image" src="https://github.com/user-attachments/assets/6a8fdb1a-6c80-4ed7-8260-0ebdcdeb340d" />
 
 **Topic**
 - Ayer Keroh topic: zteFlood/flood/melaka/ayerkeroh
